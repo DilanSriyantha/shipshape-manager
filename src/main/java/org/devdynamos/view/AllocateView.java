@@ -9,6 +9,8 @@ import org.devdynamos.model.Job;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class AllocateView {
     private JPanel panel1;
@@ -41,6 +43,7 @@ public class AllocateView {
     private JLabel lblChooseEmp;
     private JTextField txtAllocateTask;
     private JLabel lblAllocateTask;
+    private JList listAllocation;
 
     EmployeeController employeeController = new EmployeeController();
     Employee employee = null;
@@ -49,6 +52,7 @@ public class AllocateView {
     AllocationController allocationController = new AllocationController();
     Job.Allocation allocation = null;
     JFrame frame = new JFrame("AllocateView");
+
 
     public AllocateView() {
         btnEmpAdd.addActionListener(new ActionListener() {
@@ -61,12 +65,7 @@ public class AllocateView {
         });
         btnAllocate.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Employee selectedEmp = employeeController.getEmployeeList().get(comboBoxEmp.getSelectedIndex());
-                Job selectedJob = jobController.getJobList().get(comboBoxJob.getSelectedIndex());
-                allocation = allocationController.createAllocation(selectedJob, selectedEmp, txtAllocateTask.getText());
-                JOptionPane.showMessageDialog(frame, selectedEmp.getmEmpName() + " Allocated for " + selectedJob.getmJobTitle());
-            }
+            public void actionPerformed(ActionEvent e) { createAllocation(); }
         });
     }
 
@@ -129,6 +128,22 @@ public class AllocateView {
         } else {
             JOptionPane.showMessageDialog(frame, "Invalid inputs!");
         }
+    }
+
+    public void createAllocation() {
+        Employee selectedEmp = employeeController.getEmployeeList().get(comboBoxEmp.getSelectedIndex());
+        Job selectedJob = jobController.getJobList().get(comboBoxJob.getSelectedIndex());
+        allocation = allocationController.createAllocation(selectedJob, selectedEmp, txtAllocateTask.getText());
+        selectedJob.setAllocationList(allocation);
+        JOptionPane.showMessageDialog(frame, selectedEmp.getmEmpName() + " Allocated for " + selectedJob.getmJobTitle());
+
+        ArrayList<String> strList = new ArrayList<String>();
+        for (Job job : jobController.getJobList()) {
+            for (Job.Allocation allocation : job.getAllocationList()) {
+                strList.add(job.getmJobTitle() + " - " + allocation.getEmployee().getmEmpName());
+            }
+        }
+        listAllocation.setListData(strList.toArray(new String[0]));
     }
 
     public static void main(String[] args) {

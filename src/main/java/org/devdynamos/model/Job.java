@@ -1,5 +1,7 @@
 package org.devdynamos.model;
 
+import java.util.ArrayList;
+
 public class Job {
     private String mJobID;
     private String mJobTitle;
@@ -7,6 +9,16 @@ public class Job {
     private String mShipName;
     private String mLocation;
     private String mDate;
+
+    private ArrayList<Allocation> allocationList = new ArrayList<Allocation>();
+
+    public ArrayList<Allocation> getAllocationList() {
+        return allocationList;
+    }
+
+    public void setAllocationList(Allocation allocation) {
+        this.allocationList.add(allocation);
+    }
 
     public Job(String mJobID, String mJobTitle, String mJobDesc, String mShipName, String mLocation, String mDate) {
         this.mJobID = mJobID;
