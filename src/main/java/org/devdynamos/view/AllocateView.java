@@ -75,7 +75,6 @@ public class AllocateView {
         tblEmp.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                btnAllocate.setEnabled(true);
                 behaveAllocateBtn();
             }
         });
@@ -84,10 +83,10 @@ public class AllocateView {
     private void behaveAllocateBtn() {
         if (tblEmp.getValueAt(tblEmp.getSelectedRow(), 4) != "Allocated") {
             btnAllocate.setText("Allocate");
-            btnAllocate.setIcon(AssetsManager.getImageIcon("AllocateIcon"));
+            btnAllocate.setEnabled(true);
         } else {
-            btnAllocate.setText("Deallocate");
-            btnAllocate.setIcon(AssetsManager.getImageIcon("DeallocateIcon"));
+            btnAllocate.setText("Allocated");
+            btnAllocate.setEnabled(false);
         }
     }
 

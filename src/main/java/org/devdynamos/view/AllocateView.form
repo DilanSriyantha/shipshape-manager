@@ -153,6 +153,7 @@
                 </constraints>
                 <properties>
                   <background color="-14408668"/>
+                  <focusPainted value="false"/>
                   <foreground color="-1"/>
                   <text value="Allocate"/>
                 </properties>
