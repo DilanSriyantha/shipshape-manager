@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.AllocateView">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="27dc6" binding="pnlRoot" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="800" height="600"/>
     </constraints>
@@ -78,7 +78,7 @@
           </grid>
         </children>
       </grid>
-      <grid id="95056" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="95056" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="40" left="40" bottom="40" right="40"/>
         <constraints border-constraint="South"/>
         <properties>
@@ -88,7 +88,7 @@
         <children>
           <component id="78a0a" class="javax.swing.JLabel" binding="lblTotalEmp">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <foreground color="-14474461"/>
@@ -97,15 +97,17 @@
           </component>
           <hspacer id="32dcb">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
           <grid id="7035a" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-723724"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="6e77f" class="javax.swing.JButton" binding="btnSave">
@@ -131,6 +133,28 @@
                   <focusPainted value="false"/>
                   <foreground color="-12298241"/>
                   <text value="Cancel"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="318fc" binding="pnlAllocate" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-723724"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="5f8ab" class="javax.swing.JButton" binding="btnAllocate">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-14408668"/>
+                  <foreground color="-1"/>
+                  <text value="Allocate"/>
                 </properties>
               </component>
             </children>
@@ -161,6 +185,7 @@
                   <background color="-723724"/>
                   <fillsViewportHeight value="true"/>
                   <foreground color="-14474461"/>
+                  <preferredScrollableViewportSize width="450" height="400"/>
                   <rowHeight value="28"/>
                   <rowMargin value="1"/>
                   <rowSelectionAllowed value="true"/>
