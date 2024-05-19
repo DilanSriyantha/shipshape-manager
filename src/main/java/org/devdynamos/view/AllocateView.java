@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AllocateView {
     private JPanel pnlRoot;
@@ -21,6 +22,10 @@ public class AllocateView {
     private JLabel lblTotalEmp;
     private JPanel pnlAllocate;
     private JButton btnAllocate;
+    private JButton btnViewAllocatedList;
+
+    // Save newly allocated objects temporarily
+    private ArrayList<Object> tmpAllocateList = new ArrayList<Object>();
 
     public AllocateView() {
         TableData tableData = new TableData();
@@ -29,21 +34,39 @@ public class AllocateView {
         btnAllocate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Get selected row when clicking Allocate button
                 int row = tblEmp.getSelectedRow();
+
+                // Change cell text when allocating
                 if (tableData.model.getValueAt(row, 4) != "Allocated") {
                     tableData.model.setValueAt("Allocated", row, 4);
                     tableData.model.setValueAt("Unavailable", row, 3);
-                } else {
-                    tableData.model.setValueAt("Not Allocated", row, 4);
-                    tableData.model.setValueAt("Available", row, 3);
+
+                    // Save newly allocated objects
+                    for(int i = 0; i < tableData.data.length; i++) {
+                        if (tableData.data[i][0] == tableData.model.getValueAt(row, 0)) {
+                            tmpAllocateList.add(tableData.data[i]);
+                            break;
+                        }
+                    }
                 }
+
+                // Change Allocate button text and style after clicking
                 behaveAllocateBtn();
             }
         });
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Exit the program when clicking Cancel button
                 System.exit(0);
+            }
+        });
+        btnSearchEmp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String key = txtSearchEmp.getText();
+                System.out.println(key);
             }
         });
     }
@@ -72,6 +95,8 @@ public class AllocateView {
     private void setAllocateBtn() {
         btnAllocate.setIcon(AssetsManager.getImageIcon("AllocateIcon"));
         btnAllocate.setEnabled(false);
+
+        // Changes Allocate button when selecting a row
         tblEmp.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
