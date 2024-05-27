@@ -22,96 +22,129 @@ public class AllocateView {
     private JLabel lblTotalEmp;
     private JPanel pnlAllocate;
     private JButton btnAllocate;
-    private JButton btnViewAllocatedList;
+    private JCheckBox checkBoxFilterAllocatedEmp;
+
+    JobData jobData = new JobData();
+    private Object[][] data;
+    private DefaultTableModel model;
 
     // Save newly allocated objects temporarily
-    private ArrayList<Object> tmpAllocateList = new ArrayList<Object>();
+    private ArrayList<Object[]> tmpAllocateList = new ArrayList<Object[]>();
 
     public AllocateView() {
-        TableData tableData = new TableData();
-        setAllocateBtn();
-
-        btnAllocate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Get selected row when clicking Allocate button
-                int row = tblEmp.getSelectedRow();
-
-                // Change cell text when allocating
-                if (tableData.model.getValueAt(row, 4) != "Allocated") {
-                    tableData.model.setValueAt("Allocated", row, 4);
-                    tableData.model.setValueAt("Unavailable", row, 3);
-
-                    // Save newly allocated objects
-                    for(int i = 0; i < tableData.data.length; i++) {
-                        if (tableData.data[i][0] == tableData.model.getValueAt(row, 0)) {
-                            tmpAllocateList.add(tableData.data[i]);
-                            break;
-                        }
-                    }
-                }
-
-                // Change Allocate button text and style after clicking
-                behaveAllocateBtn();
-            }
-        });
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Exit the program when clicking Cancel button
-                System.exit(0);
-            }
-        });
-        btnSearchEmp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String key = txtSearchEmp.getText();
-                System.out.println(key);
-            }
-        });
-    }
-
-    private class TableData {
-        JobData jobData = new JobData();
-        Object[][] data = jobData.getData();
-
         String[] title = {"ID", "Employee", "Job Role", "Availability", "Allocate"};
-
-        DefaultTableModel model = new DefaultTableModel(data, title) {
+        data = jobData.getData();
+        model = new DefaultTableModel(data, title) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        TableData() {
-            tblEmp.setModel(model);
-            tblEmp.setFocusable(false);
-            tblEmp.getTableHeader().setReorderingAllowed(false);
-            tblEmp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        }
+        tableRender();
+        setAllocateBtn();
+
+        btnAllocate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = tblEmp.getSelectedRow();
+
+                if (!model.getValueAt(row, 4).equals("Allocated")) {
+                    model.setValueAt("Allocated", row, 4);
+                    model.setValueAt("Unavailable", row, 3);
+
+                    for (Object[] rowData : data) {
+                        if (rowData[0].equals(model.getValueAt(row, 0))) {
+                            rowData[3] = "Unavailable";
+                            rowData[4] = "Allocated";
+                            tmpAllocateList.add(rowData);
+                            break;
+                        }
+                    }
+                    lblTotalEmp.setText(tmpAllocateList.size() + " Selected");
+                }
+                behaveAllocateBtn(row);
+            }
+        });
+
+        btnCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        btnSearchEmp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String key = txtSearchEmp.getText().toLowerCase();
+                filterTableData(key, checkBoxFilterAllocatedEmp.isSelected());
+            }
+        });
+
+        checkBoxFilterAllocatedEmp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String key = txtSearchEmp.getText().toLowerCase();
+                filterTableData(key, checkBoxFilterAllocatedEmp.isSelected());
+            }
+        });
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = "";
+                for (Object[] rowData : tmpAllocateList) {
+                    str += rowData[0] + "\n";
+                }
+                JOptionPane.showMessageDialog(pnlRoot, str);
+            }
+        });
+    }
+
+    private void tableRender() {
+        tblEmp.setModel(model);
+        tblEmp.setFocusable(false);
+        tblEmp.getTableHeader().setReorderingAllowed(false);
+        tblEmp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void setAllocateBtn() {
         btnAllocate.setIcon(AssetsManager.getImageIcon("AllocateIcon"));
         btnAllocate.setEnabled(false);
 
-        // Changes Allocate button when selecting a row
         tblEmp.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                behaveAllocateBtn();
+                int row = tblEmp.getSelectedRow();
+                if (row != -1) {
+                    behaveAllocateBtn(row);
+                }
             }
         });
     }
 
-    private void behaveAllocateBtn() {
-        if (tblEmp.getValueAt(tblEmp.getSelectedRow(), 4) != "Allocated") {
+    private void behaveAllocateBtn(int row) {
+        if (!tblEmp.getValueAt(row, 4).equals("Allocated")) {
             btnAllocate.setText("Allocate");
             btnAllocate.setEnabled(true);
         } else {
             btnAllocate.setText("Allocated");
             btnAllocate.setEnabled(false);
+        }
+    }
+
+    private void filterTableData(String key, boolean checkBoxAllocateEmpSelection) {
+        model.setRowCount(0);
+
+        for (Object[] rowData : data) {
+            String tempID = ((String) rowData[0]).toLowerCase();
+            String tempName = ((String) rowData[1]).toLowerCase();
+            String tempJobRole = ((String) rowData[2]).toLowerCase();
+            boolean matchesSearch = tempID.contains(key) || tempName.contains(key) || tempJobRole.contains(key);
+
+            if (matchesSearch && (!checkBoxAllocateEmpSelection || rowData[4].equals("Allocated"))) {
+                model.addRow(rowData);
+            }
         }
     }
 
