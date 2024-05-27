@@ -6,6 +6,7 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequestInitializer;
@@ -26,16 +27,33 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.lang.reflect.Array;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class NotificationSender {
-    private static final String APPLICATION_NAME = "ShipShapeManager";
+    private static final String SENDER = "dilans091@gmail.com";
+    private static final String APPLICATION_NAME = "ShipshapeManager";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
-    private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
-    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+    private static final List<String> SCOPES = new ArrayList<>(Arrays.asList(
+            GmailScopes.GMAIL_LABELS,
+            GmailScopes.GMAIL_SEND
+    ));
+    private static final String CREDENTIALS_FILE_PATH = "/client_secret_447264114816-8cgr1cga8b3504qptpu8s3vcou7227l7.apps.googleusercontent.com.json";
+    private static Gmail service;
+
+    private static void initialize() throws Exception {
+        NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+
+        // create the gmail api client
+        service = new Gmail.Builder(httpTransport,
+                jsonFactory,
+                getCredentials(httpTransport))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+    }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // load client secrets
@@ -50,7 +68,7 @@ public class NotificationSender {
         // build flow and trigger user authorization request
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setDataStoreFactory(new FileDataStoreFactory(Paths.get(TOKENS_DIRECTORY_PATH).toFile()))
                 .setAccessType("offline")
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
@@ -60,17 +78,8 @@ public class NotificationSender {
         return credential;
     }
 
-    public Message sendEmail(String fromEmailAddress, String toEmailAddress, String subject, String body) throws MessagingException, IOException {
-        GoogleCredentials credentials = GoogleCredentials.getApplicationDefault()
-                .createScoped(GmailScopes.GMAIL_SEND);
-        HttpRequestInitializer requestInitializer = new HttpCredentialsAdapter(credentials);
-
-        // create the gmail api client
-        Gmail service = new Gmail.Builder(new NetHttpTransport(),
-                GsonFactory.getDefaultInstance(),
-                requestInitializer)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+    public static Message sendEmail(String toEmailAddress, String subject, String body) throws Exception {
+        initialize();
 
         // create the email content
         String messageSubject = subject;
@@ -80,7 +89,7 @@ public class NotificationSender {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         MimeMessage email = new MimeMessage(session);
-        email.setFrom(new InternetAddress(fromEmailAddress));
+        email.setFrom(new InternetAddress(SENDER));
         email.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(toEmailAddress));
         email.setSubject(messageSubject);
@@ -92,6 +101,7 @@ public class NotificationSender {
         byte[] rawMessageBytes = buffer.toByteArray();
         String encodedEmail = Base64.encodeBase64URLSafeString(rawMessageBytes);
         Message message = new Message();
+        message.setRaw(encodedEmail);
 
         try{
             message = service.users().messages().send("me", message).execute();
