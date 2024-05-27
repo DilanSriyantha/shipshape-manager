@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+tokens
+src/main/resources/client_secret_447264114816-8cgr1cga8b3504qptpu8s3vcou7227l7.apps.googleusercontent.com.json
