@@ -1,4 +1,4 @@
-package org.devdynamos.Utilities;
+package org.devdynamos.utils;
 
 import javax.swing.*;
 import java.awt.*;

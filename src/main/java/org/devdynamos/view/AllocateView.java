@@ -1,15 +1,20 @@
 package org.devdynamos.view;
 
-import org.devdynamos.Utilities.AssetsManager;
-import org.devdynamos.Utilities.JobData;
+import org.devdynamos.contollers.AllocateController;
+import org.devdynamos.models.Employee;
+import org.devdynamos.models.EmployeeTableModel;
+import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.CustomBooleanCellRenderer;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AllocateView {
     private JPanel pnlRoot;
@@ -24,53 +29,35 @@ public class AllocateView {
     private JButton btnAllocate;
     private JCheckBox checkBoxFilterAllocatedEmp;
 
-    JobData jobData = new JobData();
-    private Object[][] data;
-    private DefaultTableModel model;
+    private AllocateController allocateController = new AllocateController();
+    private EmployeeTableModel employeeTableModel;
+    private List<Employee> employeesList;
 
     // Save newly allocated objects temporarily
     private ArrayList<Object[]> tmpAllocateList = new ArrayList<Object[]>();
 
     public AllocateView() {
-        String[] title = {"ID", "Employee", "Job Role", "Availability", "Allocate"};
-        data = jobData.getData();
-        model = new DefaultTableModel(data, title) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
 
-        tableRender();
+        loadEmployees();
+        renderTable();
         setAllocateBtn();
 
         btnAllocate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row = tblEmp.getSelectedRow();
+                final int selectedRowIndex = tblEmp.getSelectedRow();
 
-                if (!model.getValueAt(row, 4).equals("Allocated")) {
-                    model.setValueAt("Allocated", row, 4);
-                    model.setValueAt("Unavailable", row, 3);
-
-                    for (Object[] rowData : data) {
-                        if (rowData[0].equals(model.getValueAt(row, 0))) {
-                            rowData[3] = "Unavailable";
-                            rowData[4] = "Allocated";
-                            tmpAllocateList.add(rowData);
-                            break;
-                        }
-                    }
-                    lblTotalEmp.setText(tmpAllocateList.size() + " Selected");
-                }
-                behaveAllocateBtn(row);
+                employeeTableModel.setAllocated(
+                        selectedRowIndex,
+                        !employeeTableModel.getEmployeeAt(selectedRowIndex).isAllocated()
+                );
             }
         });
 
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+//                System.exit(0);
             }
         });
 
@@ -101,11 +88,25 @@ public class AllocateView {
         });
     }
 
-    private void tableRender() {
-        tblEmp.setModel(model);
-        tblEmp.setFocusable(false);
-        tblEmp.getTableHeader().setReorderingAllowed(false);
-        tblEmp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    private void loadEmployees() {
+        this.employeesList = this.allocateController.getEmployeesList();
+    }
+
+    private void renderTable() {
+        this.employeeTableModel = new EmployeeTableModel(this.employeesList);
+        this.tblEmp.setModel(this.employeeTableModel);
+
+        // setup row sorter
+        TableRowSorter<EmployeeTableModel> sorter = new TableRowSorter<>(this.employeeTableModel);
+        this.tblEmp.setRowSorter(sorter);
+
+        // custom cell renderer for specific cells
+        this.tblEmp.getColumnModel().getColumn(5).setCellRenderer(new CustomBooleanCellRenderer("Allocated"));
+        this.tblEmp.getColumnModel().getColumn(3).setCellRenderer(new CustomBooleanCellRenderer("Available"));
+
+        this.tblEmp.setFocusable(false);
+        this.tblEmp.getTableHeader().setReorderingAllowed(false);
+        this.tblEmp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void setAllocateBtn() {
@@ -134,16 +135,25 @@ public class AllocateView {
     }
 
     private void filterTableData(String key, boolean checkBoxAllocateEmpSelection) {
-        model.setRowCount(0);
+        TableRowSorter<?> sorter = (TableRowSorter<?>) this.tblEmp.getRowSorter();
 
-        for (Object[] rowData : data) {
-            String tempID = ((String) rowData[0]).toLowerCase();
-            String tempName = ((String) rowData[1]).toLowerCase();
-            String tempJobRole = ((String) rowData[2]).toLowerCase();
-            boolean matchesSearch = tempID.contains(key) || tempName.contains(key) || tempJobRole.contains(key);
+        System.out.println(key);
 
-            if (matchesSearch && (!checkBoxAllocateEmpSelection || rowData[4].equals("Allocated"))) {
-                model.addRow(rowData);
+        RowFilter<Object, Object> idFilter = RowFilter.regexFilter("(?i)" + key, 0);
+        RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + key, 1);
+        RowFilter<Object, Object> allocatedFilter = RowFilter.regexFilter("(?i)true", 5);
+
+        if (checkBoxAllocateEmpSelection){
+            if(!key.isEmpty()){
+                sorter.setRowFilter(RowFilter.andFilter(Arrays.asList(RowFilter.orFilter(Arrays.asList(idFilter, nameFilter)), allocatedFilter)));
+            }else{
+                sorter.setRowFilter(allocatedFilter); // filter allocated=true rows only
+            }
+        }else{
+            if(!key.isEmpty()){
+                sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(idFilter, nameFilter)));
+            }else{
+                sorter.setRowFilter(null);
             }
         }
     }

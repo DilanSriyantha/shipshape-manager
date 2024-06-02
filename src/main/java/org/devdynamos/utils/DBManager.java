@@ -1,9 +1,6 @@
 package org.devdynamos.utils;
 
-import javax.swing.plaf.nimbus.State;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +10,10 @@ import java.util.Map;
 public class DBManager {
     private static Connection connection = null;
 
-    public static Connection establishConnection(String host, int port, String database, String userName, String password){
+    public static void establishConnection(String host, int port, String database, String userName, String password){
         try{
+            if(connection != null) return;
+
             connection = DriverManager.getConnection(
                     "jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + userName + "&password=" + password);
 
@@ -22,7 +21,6 @@ public class DBManager {
             System.out.println(ex.getMessage());
         }
 
-        return connection;
     }
 
     public static void closeConnection() {
@@ -153,13 +151,15 @@ public class DBManager {
                 values += "\"" + entries[i].getValue() + "\"";
             }else if(entries[i].getValue() instanceof Integer){
                 values += entries[i].getValue();
+            }else{
+                values += entries[i].getValue();
             }
 
             if(i != entries.length - 1){
                 values += ", ";
             }
         }
-
+        System.out.println("update " + table + " set " + values + " where " + condition);
         final int result = statement.executeUpdate("update " + table + " set " + values + " where " + condition);
 
         return result;

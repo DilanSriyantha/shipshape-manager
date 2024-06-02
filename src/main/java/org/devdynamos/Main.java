@@ -1,6 +1,6 @@
 package org.devdynamos;
 
-import org.devdynamos.Utilities.AssetsManager;
+import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.view.AllocateView;
 
 public class Main {
