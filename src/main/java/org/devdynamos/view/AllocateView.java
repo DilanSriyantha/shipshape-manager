@@ -101,8 +101,8 @@ public class AllocateView {
         this.tblEmp.setRowSorter(sorter);
 
         // custom cell renderer for specific cells
-        this.tblEmp.getColumnModel().getColumn(5).setCellRenderer(new CustomBooleanCellRenderer("Allocated"));
-        this.tblEmp.getColumnModel().getColumn(3).setCellRenderer(new CustomBooleanCellRenderer("Available"));
+        this.tblEmp.getColumnModel().getColumn(6).setCellRenderer(new CustomBooleanCellRenderer("Allocated"));
+        this.tblEmp.getColumnModel().getColumn(4).setCellRenderer(new CustomBooleanCellRenderer("Available"));
 
         this.tblEmp.setFocusable(false);
         this.tblEmp.getTableHeader().setReorderingAllowed(false);
@@ -141,7 +141,7 @@ public class AllocateView {
 
         RowFilter<Object, Object> idFilter = RowFilter.regexFilter("(?i)" + key, 0);
         RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + key, 1);
-        RowFilter<Object, Object> allocatedFilter = RowFilter.regexFilter("(?i)true", 5);
+        RowFilter<Object, Object> allocatedFilter = RowFilter.regexFilter("(?i)true", 6);
 
         if (checkBoxAllocateEmpSelection){
             if(!key.isEmpty()){

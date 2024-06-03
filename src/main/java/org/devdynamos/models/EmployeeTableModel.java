@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EmployeeTableModel extends AbstractTableModel {
     private List<Employee> employees;
-    private final String[] columnNames = { "ID", "Name", "Job Role", "Availability", "Work Area", "Allocation Status" };
+    private final String[] columnNames = { "ID", "Name", "Email", "Job Role", "Availability", "Work Area", "Allocation Status" };
 
     public EmployeeTableModel(List<Employee> employees) {
         this.employees = employees;
@@ -32,10 +32,11 @@ public class EmployeeTableModel extends AbstractTableModel {
         switch (columnIndex){
             case 0: return employee.getEmpId();
             case 1: return employee.getEmpName();
-            case 2: return employee.getJobRole();
-            case 3: return employee.isAvailability();
-            case 4: return employee.getWorkArea();
-            case 5: return employee.isAllocated();
+            case 2: return employee.getEmail();
+            case 3: return employee.getJobRole();
+            case 4: return employee.isAvailability();
+            case 5: return employee.getWorkArea();
+            case 6: return employee.isAllocated();
             default: throw new IllegalArgumentException("Invalid column index");
         }
     }

@@ -7,6 +7,7 @@ import javax.management.ReflectionException;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,10 @@ import java.util.List;
 public class AllocateController {
     public AllocateController() {
         DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
+        if(DBManager.getConnection() == null){
+            JOptionPane.showMessageDialog(null, "Database connection failure. Falling back.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     public List<Employee> getEmployeesList(){

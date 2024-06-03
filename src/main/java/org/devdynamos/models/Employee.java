@@ -8,6 +8,8 @@ import java.util.HashMap;
 public class Employee {
     private int empId;
     private String empName;
+    private String email;
+    private String contactNumber;
     private String jobRole;
     private boolean availability;
     private String workArea;
@@ -15,9 +17,11 @@ public class Employee {
 
     public Employee() {}
 
-    public Employee(int empId, String empName, String jobRole, boolean availability, String workArea, boolean allocationStatus) {
+    public Employee(int empId, String empName, String email, String contactNumber, String jobRole, boolean availability, String workArea, boolean allocationStatus) {
         this.empId = empId;
         this.empName = empName;
+        this.email = email;
+        this.contactNumber = contactNumber;
         this.jobRole = jobRole;
         this.availability = availability;
         this.workArea = workArea;
@@ -38,6 +42,22 @@ public class Employee {
 
     public void setEmpName(String empName) {
         this.empName = empName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber){
+        this.contactNumber = contactNumber;
     }
 
     public String getJobRole() {

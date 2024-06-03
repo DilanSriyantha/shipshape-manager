@@ -20,7 +20,10 @@ public class DBManager {
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
 
+    public static Connection getConnection() {
+        return connection;
     }
 
     public static void closeConnection() {
