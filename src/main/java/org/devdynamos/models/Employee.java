@@ -1,9 +1,12 @@
 package org.devdynamos.models;
 
+import org.devdynamos.utils.ArrayUtils;
 import org.devdynamos.utils.DBManager;
 
 import javax.swing.*;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Employee {
     private int empId;
@@ -14,6 +17,7 @@ public class Employee {
     private boolean availability;
     private String workArea;
     private boolean allocationStatus;
+    private List<Skill> skills;
 
     public Employee() {}
 
@@ -26,6 +30,36 @@ public class Employee {
         this.availability = availability;
         this.workArea = workArea;
         this.allocationStatus = allocationStatus;
+        this.skills = DBManager.get(Skill.class, "skills", "empId=" + this.empId);
+    }
+
+    public int insert(){
+        String[] columns = { "empId", "empName", "email", "contactNumber", "jobRole", "workArea" };
+        Object[] values = { this.empId, this.empName, this.email, this.contactNumber, this.jobRole, this.workArea };
+        final int id = DBManager.insert("employees", columns, values);
+        if(id > -1){
+            this.empId = id;
+        }
+
+        return id;
+    }
+
+    public void update() {
+        HashMap<String, Object> newValues = new HashMap<>(){{
+            put("empId", empId);
+            put("empName", empName);
+            put("email", email);
+            put("contactNumber", contactNumber);
+            put("jobRole", jobRole);
+            put("workArea", workArea);
+        }};
+        DBManager.update("employees", newValues, "empId=" + this.empId);
+
+        JOptionPane.showMessageDialog(null, empName + " is updated!", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void delete(){
+        DBManager.delete("employees", "empId=" + this.empId);
     }
 
     public int getEmpId() {
@@ -99,5 +133,53 @@ public class Employee {
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public List<Skill> getSkills() {
+        if(skills == null){
+            skills = DBManager.get(Skill.class, "skills", "empId=" + this.empId);
+        }
+
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public void addSkill(Skill skill){
+        final int id = DBManager.insert("skills", new String[]{ "empId", "skillDescription" }, new Object[]{ this.empId, skill.getSkillDescription() });
+        skill.setSkillId(id);
+
+        System.out.println(id);
+
+        this.skills.add(skill);
+    }
+
+    public void removeSkill(Skill skill){
+        this.skills.remove(skill);
+    }
+
+    public void removeSkillAt(int index){
+        this.skills.remove(index);
+    }
+
+    public void removeSkill(int skillId){
+        this.skills.removeIf((skill) -> {
+            return skill.getSkillId() == skillId;
+        });
+
+        DBManager.delete("skills", "skillId="+skillId);
+    }
+
+    public int getMaxSkillId(){
+        Skill sk = ArrayUtils.find(this.skills, (lastElement, element) -> {
+            if(element.getSkillId() > lastElement.getSkillId()){
+                return element;
+            }
+            return null;
+        });
+
+        return sk.getSkillId();
     }
 }

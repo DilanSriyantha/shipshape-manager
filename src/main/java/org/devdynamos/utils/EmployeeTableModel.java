@@ -1,11 +1,13 @@
-package org.devdynamos.models;
+package org.devdynamos.utils;
+
+import org.devdynamos.models.Employee;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class EmployeeTableModel extends AbstractTableModel {
     private List<Employee> employees;
-    private final String[] columnNames = { "ID", "Name", "Email", "Job Role", "Availability", "Work Area", "Allocation Status" };
+    private final String[] columnNames = { "ID", "Name", "Email", "Contact Number", "Job Role", "Availability", "Work Area", "Allocation Status" };
 
     public EmployeeTableModel(List<Employee> employees) {
         this.employees = employees;
@@ -33,10 +35,11 @@ public class EmployeeTableModel extends AbstractTableModel {
             case 0: return employee.getEmpId();
             case 1: return employee.getEmpName();
             case 2: return employee.getEmail();
-            case 3: return employee.getJobRole();
-            case 4: return employee.isAvailability();
-            case 5: return employee.getWorkArea();
-            case 6: return employee.isAllocated();
+            case 3: return employee.getContactNumber();
+            case 4: return employee.getJobRole();
+            case 5: return employee.isAvailability();
+            case 6: return employee.getWorkArea();
+            case 7: return employee.isAllocated();
             default: throw new IllegalArgumentException("Invalid column index");
         }
     }
