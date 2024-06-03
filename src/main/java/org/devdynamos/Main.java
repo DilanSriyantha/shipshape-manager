@@ -1,17 +1,28 @@
 package org.devdynamos;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.devdynamos.utils.ArrayUtils;
+import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.DBManager;
+import org.devdynamos.view.RootView;
+
+import java.sql.SQLException;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/person_add.png"), "AllocateIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/person_remove.png"), "DeallocateIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/add.png"), "AddIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/edit.png"), "UpdateIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete.png"), "DeleteIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/back_dark.png"), "BackIcon");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        RootView rootView = new RootView();
+        rootView.show();
+
+//        DBManager.insertBatch("skills", new String[]{ "empId", "skillDescription" }, new Object[][]{
+//                {1, "Java"},
+//                {2, "C#"},
+//                {3, "C++"}
+//        });
     }
 }
