@@ -3,15 +3,16 @@ package org.devdynamos.view;
 import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomeView {
     private JPanel pnlRoot;
     private JLabel lblTitle;
-    private JButton goButton;
+    private JButton btnOrders;
     private JButton btnEmployees;
+    private JButton btnInventory;
+    private JButton btnSuppliers;
     private RootView rootView;
 
     public HomeView(RootView rootView){
@@ -20,7 +21,28 @@ public class HomeView {
         btnEmployees.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.navigate(NavPath.EMPLOYEES);
+                rootView.navigate(NavPath.EMPLOYEES, new EmployeesView(rootView).getRootPanel());
+            }
+        });
+
+        btnOrders.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.CASHIER_DASHBOARD, new CashierDashboard(rootView).getRootPanel());
+            }
+        });
+
+        btnInventory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.INVENTORY, new InventoryManagement(rootView).getRootPanel());
+            }
+        });
+
+        btnSuppliers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.SUPPLIERS, new SuppliersManagement(rootView).getRootPanel());
             }
         });
     }

@@ -20,6 +20,12 @@ public class ArrayUtils {
         return index;
     }
 
+    public static <T> int indexOf(List<T> list, T targetObject){
+        T[] array = list.toArray((T[])new Object[0]);
+
+        return indexOf(array, targetObject);
+    }
+
     // this method accepts only class types
     // so if you want to map integers then you have to use Integer[] instead of primitive type;
     public static <T> T[] map(T[] array, MapIteratorCallback<T> callback){

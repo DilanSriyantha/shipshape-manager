@@ -1,19 +1,17 @@
 package org.devdynamos.contollers;
 
-import org.devdynamos.models.Employee;
+import org.devdynamos.models.SparePart;
+import org.devdynamos.models.Supplier;
 import org.devdynamos.utils.DBManager;
 
-import javax.management.ReflectionException;
 import javax.swing.*;
-import java.awt.*;
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class AllocateController {
-    public AllocateController() {
+public class SuppliersController {
+    public SuppliersController() {
         DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
         if(DBManager.getConnection() == null){
             JOptionPane.showMessageDialog(null, "Database connection failure. Falling back.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -21,27 +19,36 @@ public class AllocateController {
         }
     }
 
-    public List<Employee> getEmployeesList(){
+    public List<Supplier> getSuppliersList() {
         try{
-            List<Employee> employees = DBManager.getAll(Employee.class, "employees");
-            return  employees;
+            List<Supplier> suppliers = DBManager.getAll(Supplier.class, "suppliers");
+            return suppliers;
         }catch (Exception ex){
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return new ArrayList<>();
         }
     }
 
-    public Object[][] getEmployees2DArray(Component parentComponent) {
-        try{
-            List<Employee> employees = DBManager.getAll(Employee.class, "employees");
-            return this.to2DArray(employees);
-        }catch (Exception ex){
-            JOptionPane.showMessageDialog(parentComponent, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return new Object[0][0];
-        }
+    public void insertSupplier(Supplier supplier){
+        String[] columns = { "supplierName", "contactNumber", "email" };
+
+        final int res = DBManager.insert("suppliers", columns, supplier.toObjectArray());
+        if(res > 0)
+            JOptionPane.showMessageDialog(null, "Supplier is inserted successfully.");
     }
 
-    private <T> Object[][] to2DArray(List<T> list) throws IllegalAccessException, ReflectionException, Exception {
+    public void updateSupplier(int id, HashMap<String, Object> newValues){
+        final int res = DBManager.update("suppliers", newValues, "supplierId=" + id);
+        if(res > 0)
+            JOptionPane.showMessageDialog(null, newValues.get("supplierName") + " updated successfully.");
+    }
+
+    public void deleteSupplier(int id){
+        DBManager.delete("suppliers", "supplierId=" + id);
+    }
+
+    private <T> Object[][] to2DArray(List<T> list) throws Exception {
         if(list.isEmpty()) return new Object[0][0];
 
         Class<?> model = list.getFirst().getClass();

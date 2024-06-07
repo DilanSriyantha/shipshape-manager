@@ -1,6 +1,6 @@
 package org.devdynamos.view;
 
-import org.devdynamos.contollers.AllocateController;
+import org.devdynamos.contollers.EmployeesController;
 import org.devdynamos.models.Employee;
 import org.devdynamos.utils.*;
 
@@ -10,6 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +36,7 @@ public class EmployeesView {
 
     private JCheckBox checkBoxFilterAllocatedEmp;
 
-    private AllocateController allocateController = new AllocateController();
+    private EmployeesController allocateController = new EmployeesController();
     private EmployeeTableModel employeeTableModel;
     private RootView rootView;
 
@@ -85,7 +87,7 @@ public class EmployeesView {
     }
 
     private void initButtons() {
-        btnAllocate.setIcon(AssetsManager.getImageIcon("AllocateIcon"));
+        btnAllocate.setIcon(AssetsManager.getImageIcon("PersonAddIcon"));
         btnAllocate.setEnabled(false);
 
         tblEmp.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -116,7 +118,7 @@ public class EmployeesView {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.navigate(NavPath.HOME);
+                rootView.goBack();
             }
         });
 
@@ -125,6 +127,15 @@ public class EmployeesView {
             public void actionPerformed(ActionEvent e) {
                 String key = txtSearchEmp.getText().toLowerCase();
                 filterTableData(key, checkBoxFilterAllocatedEmp.isSelected());
+            }
+        });
+
+        txtSearchEmp.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    btnSearchEmp.doClick();
+                }
             }
         });
 
@@ -180,19 +191,11 @@ public class EmployeesView {
     }
 
     private void behaveUpdateBtn(int row){
-        if(row > -1){
-            btnUpdate.setEnabled(true);
-        }else{
-            btnUpdate.setEnabled(false);
-        }
+        btnUpdate.setEnabled(row >= 0);
     }
 
     private void behaveDeleteBtn(int row){
-        if(row > -1){
-            btnDelete.setEnabled(true);
-        }else{
-            btnDelete.setEnabled(false);
-        }
+        btnDelete.setEnabled(row >= 0);
     }
 
     private void filterTableData(String key, boolean checkBoxAllocateEmpSelection) {

@@ -88,6 +88,39 @@ public class DBManager {
         return resultsList;
     }
 
+    public static <T> List<T> executeQuery(Class<T> model, String query) throws SQLException, ReflectiveOperationException {
+        List <T> resultsList = new ArrayList<>();
+
+        try(ResultSet resultSet = runQuery(query)){
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            Field[] fields = model.getDeclaredFields();
+
+            while(resultSet.next()){
+                T modelInstance = model.getDeclaredConstructor().newInstance();
+
+                // ResultSet column count starting at 1
+                for(int i = 1; i <= columnCount; i++){
+                    String columnName = metaData.getColumnName(i);
+                    Object value = resultSet.getObject(i);
+
+                    for(Field field : fields){
+                        if(field.getName().equalsIgnoreCase(columnName)){
+                            field.setAccessible(true);
+                            field.set(modelInstance, value);
+                            break;
+                        }
+                    }
+                }
+
+                resultsList.add(modelInstance);
+            }
+        }
+
+        return resultsList;
+    }
+
     public static <T> List<T> get(Class<T> model, String table, String condition){
         List<T> resultsList = new ArrayList<>();
 

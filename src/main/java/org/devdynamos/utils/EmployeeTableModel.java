@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class EmployeeTableModel extends AbstractTableModel {
-    private List<Employee> employees;
+    private final List<Employee> employees;
     private final String[] columnNames = { "ID", "Name", "Email", "Contact Number", "Job Role", "Availability", "Work Area", "Allocation Status" };
 
     public EmployeeTableModel(List<Employee> employees) {

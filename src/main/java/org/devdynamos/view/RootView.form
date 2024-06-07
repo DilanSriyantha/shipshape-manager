@@ -2,9 +2,11 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.RootView">
   <grid id="27dc6" binding="pnlRoot" layout-manager="CardLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="800" height="600"/>
     </constraints>
-    <properties/>
+    <properties>
+      <minimumSize width="800" height="600"/>
+    </properties>
     <border type="none"/>
     <children/>
   </grid>

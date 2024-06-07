@@ -185,7 +185,7 @@
                                 <properties/>
                                 <border type="none"/>
                                 <children>
-                                  <component id="14aab" class="javax.swing.JButton" binding="goButton" default-binding="true">
+                                  <component id="14aab" class="javax.swing.JButton" binding="btnOrders">
                                     <constraints border-constraint="North"/>
                                     <properties>
                                       <text value="Go"/>
@@ -276,7 +276,7 @@
                                 <properties/>
                                 <border type="none"/>
                                 <children>
-                                  <component id="7d1fd" class="javax.swing.JButton" default-binding="true">
+                                  <component id="7d1fd" class="javax.swing.JButton" binding="btnSuppliers">
                                     <constraints border-constraint="Center"/>
                                     <properties>
                                       <text value="Go"/>
@@ -367,7 +367,7 @@
                                 <properties/>
                                 <border type="none"/>
                                 <children>
-                                  <component id="54946" class="javax.swing.JButton" default-binding="true">
+                                  <component id="54946" class="javax.swing.JButton" binding="btnInventory">
                                     <constraints border-constraint="Center"/>
                                     <properties>
                                       <text value="Go"/>
