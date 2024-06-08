@@ -1,31 +1,33 @@
 package org.devdynamos;
 
-import org.devdynamos.Utils.NotificationSender;
+import org.devdynamos.utils.ArrayUtils;
+import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.DBManager;
+import org.devdynamos.view.RootView;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-import java.util.Scanner;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        String toEmail;
-        String subject;
-        String body;
-        Scanner scanner = new Scanner(System.in);
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/person_add.png"), "PersonAddIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/person_remove.png"), "DeallocateIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/add.png"), "AddIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/edit.png"), "UpdateIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete.png"), "DeleteIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete_red.png"), "DeleteRedIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete_red_2.png"), "DeleteRedEnterIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/back_dark.png"), "BackIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/gear.png"), "GearIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/paint.png"), "PaintIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/repair.png"), "RepairIcon");
 
-        System.out.println("toEmail -> ");
-        toEmail = scanner.nextLine();
+        RootView rootView = new RootView();
+        rootView.show();
 
-        System.out.println("subject -> ");
-        subject = scanner.nextLine();
-
-        System.out.println("body -> ");
-        body = scanner.nextLine();
-
-        try {
-            NotificationSender.sendEmail(toEmail, subject, body);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        DBManager.insertBatch("skills", new String[]{ "empId", "skillDescription" }, new Object[][]{
+//                {1, "Java"},
+//                {2, "C#"},
+//                {3, "C++"}
+//        });
     }
 }
