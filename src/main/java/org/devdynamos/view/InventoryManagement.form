@@ -123,7 +123,7 @@
               </component>
             </children>
           </scrollpane>
-          <grid id="9a6ae" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="9a6ae" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -148,6 +148,24 @@
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
+              <grid id="b3bff" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-723724"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="6bc61" class="javax.swing.JLabel" binding="lblOrderPlacementStatus">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <background color="-723724"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>
@@ -208,6 +226,15 @@
             </properties>
             <border type="none"/>
             <children>
+              <component id="a4fe2" class="javax.swing.JButton" binding="btnPlaceOrderFromSupplier">
+                <constraints/>
+                <properties>
+                  <background color="-13816531"/>
+                  <enabled value="false"/>
+                  <foreground color="-1250068"/>
+                  <text value="Order"/>
+                </properties>
+              </component>
               <component id="d9a95" class="javax.swing.JButton" binding="btnUpdate">
                 <constraints/>
                 <properties>

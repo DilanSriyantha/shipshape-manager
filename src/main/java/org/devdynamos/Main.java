@@ -1,11 +1,11 @@
 package org.devdynamos;
 
-import org.devdynamos.utils.ArrayUtils;
+import org.devdynamos.components.DatePicker;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.DBManager;
+import org.devdynamos.view.LoadingSpinner;
 import org.devdynamos.view.RootView;
 
-import java.sql.SQLException;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,14 +20,12 @@ public class Main {
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/gear.png"), "GearIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/paint.png"), "PaintIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/repair.png"), "RepairIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/spinner.gif"), "LoadingSpinnerGif");
 
         RootView rootView = new RootView();
         rootView.show();
 
-//        DBManager.insertBatch("skills", new String[]{ "empId", "skillDescription" }, new Object[][]{
-//                {1, "Java"},
-//                {2, "C#"},
-//                {3, "C++"}
-//        });
+//        DatePicker dp = new DatePicker(new Date());
+//        dp.showDialog();
     }
 }

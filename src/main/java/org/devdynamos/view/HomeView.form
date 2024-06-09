@@ -549,7 +549,7 @@
                                 <properties/>
                                 <border type="none"/>
                                 <children>
-                                  <component id="94b37" class="javax.swing.JButton" default-binding="true">
+                                  <component id="94b37" class="javax.swing.JButton" binding="btnSalesReport">
                                     <constraints border-constraint="Center"/>
                                     <properties>
                                       <text value="Go"/>

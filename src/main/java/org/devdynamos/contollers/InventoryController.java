@@ -1,13 +1,20 @@
 package org.devdynamos.contollers;
 
+import com.google.api.services.gmail.model.Message;
+import org.checkerframework.checker.units.qual.C;
+import org.devdynamos.interfaces.SendOrderPlacementCallback;
+import org.devdynamos.models.Order;
 import org.devdynamos.models.SparePart;
+import org.devdynamos.models.Supplier;
+import org.devdynamos.utils.Console;
 import org.devdynamos.utils.DBManager;
+import org.devdynamos.utils.NotificationSender;
 
 import javax.swing.*;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class InventoryController {
     public InventoryController() {
@@ -16,6 +23,64 @@ public class InventoryController {
             JOptionPane.showMessageDialog(null, "Database connection failure. Falling back.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
+    }
+
+    public void sendOrderPlacementToTheSupplier(SparePart sparePart, String preferredDeliveryDate, int quantity, SendOrderPlacementCallback callback){
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    NotificationSender.sendEmail(
+                            sparePart.getSupplierEmail(),
+                            "Order Placement Request for " + sparePart.getName(),
+                            "Dear " + sparePart.getSupplierName() + ",\n\n" +
+                                    "We trust this message finds you well.\n\n" +
+                                    "We are writing to formally notify you that our inventory of " + sparePart.getName() + " is dedicated to maintaining our high standards of service to our customers, it is imperative that we replenish our stock promptly.\n\n" +
+                                    "Please find specifics of our order below.\n\n" +
+                                    "\t• Product Name : " + sparePart.getName() + "\n" +
+                                    "\t• Quantity Required : " + quantity + "\n" +
+                                    "\t• Preferred Delivery Date : " + preferredDeliveryDate +"\n\n" +
+                                    "We kindly request you to confirm the availability of the aforementioned items and provide an estimated timeline for delivery. Should there be any potential issues or delays, please inform us at your earliest convenience to allow us to make the necessary arrangements.\n\n" +
+                                    "Kindly send the invoice and any pertinent documentation to info.shipshapemanager@gmail.com to facilitate prompt processing. We highly value our ongoing partnership with " + sparePart.getSupplierName() + " and appreciate your timely attention to this matter.\n\n" +
+                                    "Thank you for your cooperation and prompt response.\n\n" +
+                                    "Yours sincerely,\n\n" +
+                                    "ShipShape\n" +
+                                    "+94 70 13 63 615\n" +
+                                    "info.shipshapemanager@gmail.com"
+                    );
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String orderCaption = sparePart.getSupplierName() + "-" + sparePart.getName() + "-" + new Date().getTime();
+                final int res = new OrdersController().insertOrderRecord(new Order(orderCaption, sparePart.getSupplierId(), sparePart.getPartId(), quantity, preferredDeliveryDate));
+            }
+        });
+
+        Thread waitingThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    t1.join();
+                    t2.join();
+
+                    Console.log("Both threads are died");
+                    callback.execute(0);
+                }catch (Exception ex){
+                    callback.execute(-1);
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+        t2.start();
+        waitingThread.start();
     }
 
     public void insertSparePart(Object[] values){
@@ -27,7 +92,7 @@ public class InventoryController {
 
     public List<SparePart> getSparePartsList() {
         try{
-            List<SparePart> spareParts = DBManager.executeQuery(SparePart.class, "select * from spareparts as p join (select supplierId, supplierName from suppliers) as s on p.supplierId = s.supplierId");
+            List<SparePart> spareParts = DBManager.executeQuery(SparePart.class, "select * from spareparts as p join (select supplierId, supplierName, supplierEmail from suppliers) as s on p.supplierId = s.supplierId");
             return spareParts;
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

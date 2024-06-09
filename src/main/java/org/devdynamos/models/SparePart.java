@@ -1,17 +1,20 @@
 package org.devdynamos.models;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class SparePart {
     private int partId;
     private int supplierId;
     private String supplierName;
+    private String supplierEmail;
     private String partName;
     private double receivedPrice;
     private double sellingPrice;
     private int quantity;
     private boolean onShip;
     private boolean topSeller;
+    private Date date;
 
     public SparePart() {}
 
@@ -49,6 +52,14 @@ public class SparePart {
 
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
+    }
+
+    public String getSupplierEmail() {
+        return supplierEmail;
+    }
+
+    public void setSupplierEmail(String supplierEmail) {
+        this.supplierEmail = supplierEmail;
     }
 
     public String getName() {
@@ -97,6 +108,14 @@ public class SparePart {
 
     public void setTopSeller(boolean topSeller) {
         this.topSeller = topSeller;
+    }
+
+    public Date getDate(){
+        return date;
+    }
+
+    public void setDate(Date date){
+        this.date = date;
     }
 
     @Override

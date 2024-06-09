@@ -1,20 +1,22 @@
 package org.devdynamos.models;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class Supplier {
     private int supplierId;
     private String supplierName;
     private String contactNumber;
-    private String email;
+    private String supplierEmail;
+    private Date date;
 
     public Supplier() {}
 
-    public Supplier(int supplierId, String supplierName, String contactNumber, String email) {
+    public Supplier(int supplierId, String supplierName, String contactNumber, String supplierEmail) {
         this.supplierId = supplierId;
         this.supplierName = supplierName;
         this.contactNumber = contactNumber;
-        this.email = email;
+        this.supplierEmail = supplierEmail;
     }
 
     public int getSupplierId() {
@@ -42,15 +44,23 @@ public class Supplier {
     }
 
     public String getEmail() {
-        return email;
+        return supplierEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String supplierEmail) {
+        this.supplierEmail = supplierEmail;
+    }
+
+    public Date getDate(){
+        return date;
+    }
+
+    public void setDate(Date date){
+        this.date = date;
     }
 
     public Object[] toObjectArray() {
-        Object[] values = { this.supplierName, this.contactNumber, this.email };
+        Object[] values = { this.supplierName, this.contactNumber, this.supplierEmail };
 
         return values;
     }
@@ -60,7 +70,7 @@ public class Supplier {
             put("supplierId", supplierId);
             put("supplierName", supplierName);
             put("contactNumber", contactNumber);
-            put("email", email);
+            put("supplierEmail", supplierEmail);
         }};
 
         return supplierHashMap;

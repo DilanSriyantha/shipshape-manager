@@ -1,18 +1,22 @@
 package org.devdynamos.view;
 
+import org.devdynamos.components.DatePicker;
 import org.devdynamos.contollers.InventoryController;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.Console;
 import org.devdynamos.utils.CustomBooleanCellRenderer;
 import org.devdynamos.utils.InventoryTableModel;
-import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class InventoryManagement {
@@ -30,6 +34,8 @@ public class InventoryManagement {
     private JButton btnSearch;
     private JButton btnUpdate;
     private JButton btnDelete;
+    private JButton btnPlaceOrderFromSupplier;
+    private JLabel lblOrderPlacementStatus;
 
     private final InventoryController inventoryController;
     private InventoryTableModel inventoryTableModel;
@@ -74,6 +80,23 @@ public class InventoryManagement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.goBack();
+            }
+        });
+
+        btnPlaceOrderFromSupplier.setIcon(AssetsManager.getImageIcon("AddIcon"));
+        btnPlaceOrderFromSupplier.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlaceOrderInputDialog placeOrderInputDialog = new PlaceOrderInputDialog(
+                        (dialog, res) -> {
+                            executePlaceOrder(res.getQty(), res.getExpectedDeliveryDate());
+                            dialog.dispose();
+                        },
+                        (dialog) -> {
+                            dialog.dispose();
+                        }
+                );
+                placeOrderInputDialog.showDialog();
             }
         });
 
@@ -139,10 +162,38 @@ public class InventoryManagement {
             public void valueChanged(ListSelectionEvent e) {
                 int selectedIndex = tblInventory.getSelectedRow();
 
+                behaveOrderButton(selectedIndex);
                 behaveUpdateButton(selectedIndex);
                 behaveDeleteButton(selectedIndex);
             }
         });
+    }
+
+    private void executePlaceOrder(int qty, String expectedDate){
+        LoadingSpinner loadingSpinner = new LoadingSpinner();
+        loadingSpinner.start("Placing order...");
+
+        SparePart selectedSparePart = inventoryTableModel.getSparePartAt(tblInventory.getSelectedRow());
+        inventoryController.sendOrderPlacementToTheSupplier(
+                selectedSparePart,
+                expectedDate,
+                qty,
+                (result) -> {
+                    if(result == null) return;
+                    if(result instanceof Exception){
+                        loadingSpinner.stop();
+                        ((Exception) result).printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Order placement failed!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        loadingSpinner.stop();
+                        JOptionPane.showMessageDialog(null, "Order placement successful!", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+        );
+    }
+
+    private void behaveOrderButton(int selectedIndex){
+        btnPlaceOrderFromSupplier.setEnabled(selectedIndex >= 0);
     }
 
     private void behaveUpdateButton(int selectedIndex){

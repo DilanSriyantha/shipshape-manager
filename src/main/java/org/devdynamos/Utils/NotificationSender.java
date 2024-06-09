@@ -1,4 +1,4 @@
-package org.devdynamos.Utils;
+package org.devdynamos.utils;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -32,7 +32,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class NotificationSender {
-    private static final String SENDER = "dilans091@gmail.com";
+    private static final String SENDER = "info.shipshapemanager@gmail.com";
     private static final String APPLICATION_NAME = "ShipshapeManager";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";

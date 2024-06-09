@@ -13,6 +13,7 @@ public class HomeView {
     private JButton btnEmployees;
     private JButton btnInventory;
     private JButton btnSuppliers;
+    private JButton btnSalesReport;
     private RootView rootView;
 
     public HomeView(RootView rootView){
@@ -43,6 +44,13 @@ public class HomeView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.navigate(NavPath.SUPPLIERS, new SuppliersManagement(rootView).getRootPanel());
+            }
+        });
+
+        btnSalesReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }

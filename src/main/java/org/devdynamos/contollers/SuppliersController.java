@@ -31,7 +31,7 @@ public class SuppliersController {
     }
 
     public void insertSupplier(Supplier supplier){
-        String[] columns = { "supplierName", "contactNumber", "email" };
+        String[] columns = { "supplierName", "contactNumber", "supplierEmail" };
 
         final int res = DBManager.insert("suppliers", columns, supplier.toObjectArray());
         if(res > 0)

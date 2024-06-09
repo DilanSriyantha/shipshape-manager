@@ -5,6 +5,7 @@ import org.devdynamos.utils.DBManager;
 
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Employee {
     private boolean availability;
     private String workArea;
     private boolean allocationStatus;
+    private Date registeredDate;
     private List<Skill> skills;
 
     public Employee() {}
@@ -133,6 +135,14 @@ public class Employee {
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public Date getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(Date registeredDate){
+        this.registeredDate = registeredDate;
     }
 
     public List<Skill> getSkills() {
