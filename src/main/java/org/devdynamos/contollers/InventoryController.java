@@ -18,6 +18,8 @@ import java.util.*;
 
 public class InventoryController {
     public InventoryController() {
+        if(DBManager.getConnection() != null) return;
+
         DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
         if(DBManager.getConnection() == null){
             JOptionPane.showMessageDialog(null, "Database connection failure. Falling back.", "Error", JOptionPane.ERROR_MESSAGE);

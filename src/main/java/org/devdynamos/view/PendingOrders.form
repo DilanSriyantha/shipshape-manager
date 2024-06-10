@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.InventoryManagement">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.PendingOrders">
   <grid id="27dc6" binding="pnlRoot" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="733" height="583"/>
+      <xy x="20" y="20" width="673" height="545"/>
     </constraints>
     <properties>
       <preferredSize width="800" height="600"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="3718d" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="affd2" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="0" right="20"/>
         <constraints border-constraint="North"/>
         <properties>
@@ -17,7 +17,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="e119a" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="3167c" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -27,7 +27,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="d47bb" class="javax.swing.JTextField" binding="txtSearch">
+              <component id="73986" class="javax.swing.JTextField" binding="txtSearch">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -38,12 +38,12 @@
                   <foreground color="-16777216"/>
                 </properties>
               </component>
-              <hspacer id="4707b">
+              <hspacer id="2c9cf">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="82fe0" class="javax.swing.JButton" binding="btnSearch">
+              <component id="8a8c9" class="javax.swing.JButton" binding="btnSearch">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -64,7 +64,7 @@
               </component>
             </children>
           </grid>
-          <grid id="3b7bb" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="0">
+          <grid id="7c98a" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="0">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -73,20 +73,26 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="4e60b" class="javax.swing.JLabel">
+              <component id="e854c" class="javax.swing.JLabel">
                 <constraints/>
                 <properties>
                   <background color="-723724"/>
                   <font size="20" style="1"/>
                   <foreground color="-16777216"/>
-                  <text value="Manage Inventory"/>
+                  <text value="Pending Orders"/>
                 </properties>
               </component>
+              <grid id="8048d" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
             </children>
           </grid>
         </children>
       </grid>
-      <grid id="4ad0b" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="58112" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="0" right="20"/>
         <constraints border-constraint="Center"/>
         <properties>
@@ -94,7 +100,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <scrollpane id="226c9">
+          <scrollpane id="1fc97">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -104,7 +110,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="5cd43" class="javax.swing.JTable" binding="tblInventory">
+              <component id="369c2" class="javax.swing.JTable" binding="tblPendingOrders">
                 <constraints/>
                 <properties>
                   <background color="-723724"/>
@@ -123,7 +129,7 @@
               </component>
             </children>
           </scrollpane>
-          <grid id="9a6ae" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="4d0ce" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -133,31 +139,21 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="93e60" class="javax.swing.JCheckBox" binding="checkBoxFilterOnShip">
+              <hspacer id="c7168">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-723724"/>
-                  <foreground color="-16777216"/>
-                  <text value="FilterOn-Ship products"/>
-                </properties>
-              </component>
-              <hspacer id="55153">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <grid id="b3bff" layout-manager="BorderLayout" hgap="0" vgap="0">
+              <grid id="66e4e" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-723724"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="6bc61" class="javax.swing.JLabel" binding="lblOrderPlacementStatus">
+                  <component id="34086" class="javax.swing.JLabel" binding="lblOrderPlacementStatus">
                     <constraints border-constraint="Center"/>
                     <properties>
                       <background color="-723724"/>
@@ -170,7 +166,7 @@
           </grid>
         </children>
       </grid>
-      <grid id="4824d" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="f7eb" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="20" left="20" bottom="20" right="20"/>
         <constraints border-constraint="South"/>
         <properties>
@@ -178,7 +174,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="1cf7c" class="javax.swing.JLabel" binding="lblTotalEmp">
+          <component id="95939" class="javax.swing.JLabel" binding="lblTotalEmp">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -187,12 +183,12 @@
               <text value=""/>
             </properties>
           </component>
-          <hspacer id="7cb1d">
+          <hspacer id="92513">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <grid id="ebf3f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="fa535" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -202,32 +198,19 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="5cd08" class="javax.swing.JButton" binding="btnBack">
+              <component id="6c73b" class="javax.swing.JButton" binding="btnInStock">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-723724"/>
-                  <borderPainted value="true"/>
-                  <contentAreaFilled value="true"/>
-                  <focusPainted value="false"/>
-                  <foreground color="-13816531"/>
-                  <text value="Back"/>
-                </properties>
-              </component>
-              <component id="ace3b" class="javax.swing.JButton" binding="btnPending">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-13816531"/>
                   <foreground color="-1250068"/>
-                  <text value="Pending"/>
+                  <text value="In-Stock"/>
                 </properties>
               </component>
             </children>
           </grid>
-          <grid id="13cea" binding="pnlAllocate" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="8a68c" binding="pnlAllocate" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -236,33 +219,13 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="a4fe2" class="javax.swing.JButton" binding="btnPlaceOrderFromSupplier">
+              <component id="88042" class="javax.swing.JButton" binding="btnPlaceOrderFromSupplier">
                 <constraints/>
                 <properties>
                   <background color="-13816531"/>
                   <enabled value="false"/>
                   <foreground color="-1250068"/>
                   <text value="Order"/>
-                </properties>
-              </component>
-              <component id="d9a95" class="javax.swing.JButton" binding="btnUpdate">
-                <constraints/>
-                <properties>
-                  <background color="-14408668"/>
-                  <enabled value="false"/>
-                  <focusPainted value="false"/>
-                  <foreground color="-1250068"/>
-                  <text value="Update"/>
-                </properties>
-              </component>
-              <component id="cd2ad" class="javax.swing.JButton" binding="btnDelete">
-                <constraints/>
-                <properties>
-                  <background color="-14408668"/>
-                  <enabled value="false"/>
-                  <focusPainted value="false"/>
-                  <foreground color="-1250068"/>
-                  <text value="Delete"/>
                 </properties>
               </component>
             </children>

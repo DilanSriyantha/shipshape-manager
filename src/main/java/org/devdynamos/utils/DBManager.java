@@ -1,5 +1,7 @@
 package org.devdynamos.utils;
 
+import org.devdynamos.interfaces.DBConnectionListener;
+
 import javax.swing.*;
 import javax.swing.plaf.nimbus.State;
 import java.lang.reflect.Field;
@@ -8,21 +10,47 @@ import java.util.*;
 
 public class DBManager {
     private static Connection connection = null;
+    private static final List<DBConnectionListener> connectionListeners = new ArrayList<>();
 
     public static void establishConnection(String host, int port, String database, String userName, String password){
         try{
-            if(connection != null) return;
-
             connection = DriverManager.getConnection(
                     "jdbc:mysql://" + host + ":" + port + "/" + database + "?user=" + userName + "&password=" + password);
 
+            notifyConnectionListeners();
         }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Console.log(ex.getMessage());
+
+            terminateConnection();
+            notifyConnectionListeners();
         }
+    }
+
+    private static void terminateConnection(){
+        connection = null;
+
+        notifyConnectionListeners();
     }
 
     public static Connection getConnection() {
         return connection;
+    }
+
+    public static void addConnectionListener(DBConnectionListener connectionListener) {
+        connectionListeners.add(connectionListener);
+    }
+
+    public static void removeConnectionListener(DBConnectionListener connectionListener){
+        connectionListeners.remove(connectionListener);
+    }
+
+    private static void notifyConnectionListeners() {
+        for(DBConnectionListener connectionListener : connectionListeners){
+            if(connection != null)
+                connectionListener.onConnect();
+            else
+                connectionListener.onDisconnect();
+        }
     }
 
     public static void closeConnection() {

@@ -17,15 +17,17 @@ public class Main {
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete_red.png"), "DeleteRedIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/delete_red_2.png"), "DeleteRedEnterIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/back_dark.png"), "BackIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/back.png"), "BackLightIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/next.png"), "NextIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/gear.png"), "GearIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/paint.png"), "PaintIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/repair.png"), "RepairIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/spinner.gif"), "LoadingSpinnerGif");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/connected.png"), "ConnectedIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/disconnected.png"), "DisconnectedIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/find_connection.png"), "SearchConnectionIcon");
 
         RootView rootView = new RootView();
         rootView.show();
-
-//        DatePicker dp = new DatePicker(new Date());
-//        dp.showDialog();
     }
 }

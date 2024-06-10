@@ -8,10 +8,14 @@ public class Order {
     private int orderId;
     private String orderCaption;
     private int supplierId;
+    private String supplierName;
     private int sparePartId;
+    private String partName;
     private int quantity;
     private String expectedDeliveryDate;
     private Date placedDate;
+
+    public Order() {}
 
     public Order(String orderCaption, int supplierId, int sparePartId, int quantity, String expectedDeliveryDate) {
         this.orderCaption = orderCaption;
@@ -45,12 +49,28 @@ public class Order {
         this.supplierId = supplierId;
     }
 
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
     public int getSparePartId() {
         return sparePartId;
     }
 
     public void setSparePartId(int sparePartId) {
         this.sparePartId = sparePartId;
+    }
+
+    public String getPartName() {
+        return partName;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
     }
 
     public int getQuantity(){

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class OrdersController {
     public OrdersController() {
+        if(DBManager.getConnection() != null) return;
+
         DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
 
         if(DBManager.getConnection() == null){
@@ -19,7 +21,7 @@ public class OrdersController {
 
     public List<Order> getOrderRecordsList(){
         try{
-            List<Order> ordersList = DBManager.getAll(Order.class, "orders");
+            List<Order> ordersList = DBManager.executeQuery(Order.class, "select orderId, orderCaption, o.supplierId, supplierName, o.sparePartId, partName, quantity, expectedDeliveryDate, placedDate from orders as o join (select supplierId, supplierName from suppliers) as sup on o.supplierId = sup.supplierId join (select partId, partName from spareparts) as sp on o.sparePartId = sp.partId;");
             return ordersList;
         }catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

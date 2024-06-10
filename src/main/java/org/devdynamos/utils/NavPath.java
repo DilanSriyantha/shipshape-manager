@@ -9,5 +9,6 @@ public enum NavPath {
     REPORTS,
     MAIL,
     CASHIER_DASHBOARD,
-    SUPPLIER_PRODUCTS
+    SUPPLIER_PRODUCTS,
+    PENDING_ORDERS
 }

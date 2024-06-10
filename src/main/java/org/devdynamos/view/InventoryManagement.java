@@ -1,22 +1,18 @@
 package org.devdynamos.view;
 
-import org.devdynamos.components.DatePicker;
 import org.devdynamos.contollers.InventoryController;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.Console;
 import org.devdynamos.utils.CustomBooleanCellRenderer;
 import org.devdynamos.utils.InventoryTableModel;
+import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public class InventoryManagement {
@@ -36,6 +32,7 @@ public class InventoryManagement {
     private JButton btnDelete;
     private JButton btnPlaceOrderFromSupplier;
     private JLabel lblOrderPlacementStatus;
+    private JButton btnPending;
 
     private final InventoryController inventoryController;
     private InventoryTableModel inventoryTableModel;
@@ -80,6 +77,14 @@ public class InventoryManagement {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.goBack();
+            }
+        });
+
+        btnPending.setIcon(AssetsManager.getImageIcon("NextIcon"));
+        btnPending.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.PENDING_ORDERS, new PendingOrders(rootView).getRootPanel());
             }
         });
 

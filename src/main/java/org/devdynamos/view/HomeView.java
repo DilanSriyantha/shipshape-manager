@@ -1,5 +1,8 @@
 package org.devdynamos.view;
 
+import org.devdynamos.interfaces.DBConnectionListener;
+import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.DBManager;
 import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
@@ -14,10 +17,27 @@ public class HomeView {
     private JButton btnInventory;
     private JButton btnSuppliers;
     private JButton btnSalesReport;
+    private JLabel lblDBConStatus;
     private RootView rootView;
 
     public HomeView(RootView rootView){
         this.rootView = rootView;
+
+        DBManager.addConnectionListener(new DBConnectionListener() {
+            @Override
+            public void onConnect() {
+                lblDBConStatus.setIcon(AssetsManager.getImageIcon("ConnectedIcon"));
+                lblDBConStatus.setText("Database connected");
+            }
+
+            @Override
+            public void onDisconnect() {
+                lblDBConStatus.setIcon(AssetsManager.getImageIcon("DisconnectedIcon"));
+                lblDBConStatus.setText("Database disconnected");
+            }
+        });
+
+        tryToReconnectDB();
 
         btnEmployees.addActionListener(new ActionListener() {
             @Override
@@ -53,6 +73,23 @@ public class HomeView {
 
             }
         });
+    }
+
+    private void tryToReconnectDB() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        t.start();
     }
 
     public void show() {

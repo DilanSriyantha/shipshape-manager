@@ -12,6 +12,8 @@ import java.util.List;
 
 public class EmployeesController {
     public EmployeesController() {
+        if(DBManager.getConnection() != null) return;
+
         DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
         if(DBManager.getConnection() == null){
             JOptionPane.showMessageDialog(null, "Database connection failure. Falling back.", "Error", JOptionPane.ERROR_MESSAGE);
