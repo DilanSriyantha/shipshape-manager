@@ -74,7 +74,7 @@ Once the application is running, you can navigate through the various modules vi
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a new Pull Request.
 ## License
-This project is licensed under the MIT License - see the [LICENSE]("https://github.com/DilanSriyantha/shipshape-manager?tab=MIT-1-ov-file") file for details.
+This project is licensed under the MIT License - see the [LICENSE]("https://github.com/DilanSriyantha/shipshape-manager?tab=MIT-1-ov-file") file for details
 
 
 ### 
