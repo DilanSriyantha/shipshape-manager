@@ -25,7 +25,7 @@ public class DatePicker extends JPanel {
 
     protected final Color BACKGROUND_COLOR = new Color(244, 244, 244);
     protected final Color FOREGROUND_COLOR = new Color(45, 45, 45);
-    private final String INITIAL_DATE_FORMAT = "yyyy/MM/dd";
+    private final String INITIAL_DATE_FORMAT = "yyyy-MM-dd";
     protected final int FILL = 0;
     protected final int EMPTY = 1;
 

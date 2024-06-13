@@ -2,6 +2,8 @@ package org.devdynamos.view;
 
 import org.devdynamos.contollers.InventoryController;
 import org.devdynamos.contollers.ProductsController;
+import org.devdynamos.interfaces.SendOrderPlacementCallback;
+import org.devdynamos.models.Order;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.models.Supplier;
 import org.devdynamos.utils.AssetsManager;
@@ -37,6 +39,7 @@ public class ProductsView {
     private JButton btnUpdate;
     private JButton btnDelete;
     private JLabel lblSupplierName;
+    private JButton btnOrder;
 
     private final InventoryController inventoryController;
     private InventoryTableModel inventoryTableModel;
@@ -44,6 +47,7 @@ public class ProductsView {
     private final Supplier supplier;
 
     private List<SparePart> sparePartList;
+    private final ProductsController productsController = new ProductsController();
 
     public ProductsView(RootView rootView, Supplier supplier){
         this.rootView = rootView;
@@ -88,6 +92,14 @@ public class ProductsView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.goBack();
+            }
+        });
+
+        btnOrder.setIcon(AssetsManager.getImageIcon("AddIcon"));
+        btnOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleOrder();
             }
         });
 
@@ -169,6 +181,50 @@ public class ProductsView {
                 behaveDeleteButton(selectedIndex);
             }
         });
+    }
+
+    private void handleOrder() {
+        PlaceNewOrderInputDialog placeOrderInputDialog = new PlaceNewOrderInputDialog(
+                supplier,
+                (dialog, res) -> {
+                    executePlaceOrder((SparePart)res.get("sparePart"), (String)res.get("expectedDate"), (int)res.get("requiredQuantity"));
+
+                    dialog.dispose();
+                },
+                (dialog) -> {
+                    dialog.dispose();
+                }
+        );
+        placeOrderInputDialog.showDialog();
+    }
+
+    private void executePlaceOrder(SparePart sparePart, String expectedDate, int requiredQuantity){
+        LoadingSpinner loadingSpinner = new LoadingSpinner();
+        loadingSpinner.start("Placing order...");
+
+        productsController.placeOrder(
+                sparePart,
+                expectedDate,
+                requiredQuantity,
+                new SendOrderPlacementCallback() {
+                    @Override
+                    public void onSuccess() {
+                        loadingSpinner.stop();
+                        JOptionPane.showMessageDialog(null, "New order placed successfully", "Successful", JOptionPane.INFORMATION_MESSAGE);
+
+                        updateView();
+                    }
+
+                    @Override
+                    public void onFailed(Exception ex) {
+                        loadingSpinner.stop();
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Successful", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+
+                        updateView();
+                    }
+                }
+        );
     }
 
     private void behaveUpdateButton(int selectedIndex){

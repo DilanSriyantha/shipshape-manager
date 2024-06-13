@@ -229,15 +229,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="88042" class="javax.swing.JButton" binding="btnPlaceOrderFromSupplier">
-                <constraints/>
-                <properties>
-                  <background color="-13816531"/>
-                  <enabled value="true"/>
-                  <foreground color="-1250068"/>
-                  <text value="Order"/>
-                </properties>
-              </component>
               <component id="4fde2" class="javax.swing.JButton" binding="btnMerge">
                 <constraints/>
                 <properties>

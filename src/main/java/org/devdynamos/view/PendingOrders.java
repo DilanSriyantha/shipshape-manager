@@ -40,11 +40,13 @@ public class PendingOrders {
     private final RootView rootView;
 
     private final InventoryController inventoryController = new InventoryController();
+    private final InventoryManagement inventoryManagementView;
 
     private List<Order> ordersList;
 
-    public PendingOrders(RootView rootView) {
+    public PendingOrders(RootView rootView, InventoryManagement inventoryManagementView) {
         this.rootView = rootView;
+        this.inventoryManagementView = inventoryManagementView;
         this.ordersController = new OrdersController();
 
         loadPendingOrders();
@@ -82,14 +84,6 @@ public class PendingOrders {
     }
 
     private void initButtons() {
-        btnPlaceOrderFromSupplier.setIcon(AssetsManager.getImageIcon("AddIcon"));
-        btnPlaceOrderFromSupplier.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         btnMerge.setIcon(AssetsManager.getImageIcon("MergeIcon"));
         btnMerge.addActionListener(new ActionListener() {
             @Override
@@ -102,6 +96,7 @@ public class PendingOrders {
         btnInStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                inventoryManagementView.reload();
                 rootView.goBack();
             }
         });

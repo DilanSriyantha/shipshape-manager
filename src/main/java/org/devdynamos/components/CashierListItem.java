@@ -59,9 +59,9 @@ public class CashierListItem extends JPanel {
         setPreferredSize(new Dimension(defaultWidth, defaultHeight));
 
         // create the label with the text
-        label = new JLabel(text, icon, JLabel.CENTER);
-        label.setHorizontalTextPosition(JLabel.RIGHT);
-        label.setVerticalTextPosition(JLabel.CENTER);
+        label = new JLabel("<html>" + text + "</html>", icon, JLabel.CENTER);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setFont(new Font("Arial", Font.BOLD, 16));
 
         add(label, BorderLayout.CENTER);

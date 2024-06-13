@@ -59,7 +59,7 @@ public class InventoryController {
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                String orderCaption = sparePart.getSupplierName() + "-" + sparePart.getName() + "-" + new Date().getTime();
+                String orderCaption = sparePart.getSupplierName().trim().replace(" ", "_") + "_ " + sparePart.getName().trim().replace(" ", "_") + "_" + new Date().getTime();
                 final int res = new OrdersController().insertOrderRecord(new Order(orderCaption, sparePart.getSupplierId(), sparePart.getPartId(), quantity, preferredDeliveryDate));
             }
         });
@@ -72,9 +72,9 @@ public class InventoryController {
                     t2.join();
 
                     Console.log("Both threads are died");
-                    callback.execute(0);
+                    callback.onSuccess();
                 }catch (Exception ex){
-                    callback.execute(-1);
+                    callback.onFailed(ex);
                     ex.printStackTrace();
                 }
             }
@@ -85,11 +85,9 @@ public class InventoryController {
         waitingThread.start();
     }
 
-    public void insertSparePart(Object[] values){
+    public int insertSparePart(Object[] values){
         final int res = DBManager.insert("spareparts", new String[] { "supplierId", "partName", "receivedPrice", "sellingPrice", "currentQuantity", "initialQuantity" }, values);
-        if(res > 0){
-            JOptionPane.showMessageDialog(null, "Spare part inserted successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
-        }
+        return res;
     }
 
     public void insertOrReplaceSparePart(Object[] values){

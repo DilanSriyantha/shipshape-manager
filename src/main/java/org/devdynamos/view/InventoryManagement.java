@@ -1,6 +1,7 @@
 package org.devdynamos.view;
 
 import org.devdynamos.contollers.InventoryController;
+import org.devdynamos.interfaces.SendOrderPlacementCallback;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.CustomBooleanCellRenderer;
@@ -58,6 +59,8 @@ public class InventoryManagement {
     }
 
     private void renderTable(){
+        tblInventory.removeAll();
+
         inventoryTableModel = new InventoryTableModel(this.sparePartList);
         tblInventory.setModel(this.inventoryTableModel);
 
@@ -84,7 +87,7 @@ public class InventoryManagement {
         btnPending.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.navigate(NavPath.PENDING_ORDERS, new PendingOrders(rootView).getRootPanel());
+                handleGotoPending();
             }
         });
 
@@ -156,6 +159,10 @@ public class InventoryManagement {
         });
     }
 
+    private void handleGotoPending() {
+        rootView.navigate(NavPath.PENDING_ORDERS, new PendingOrders(rootView, this).getRootPanel());
+    }
+
     private void handleUpdate() {
         int viewSelectedIndex = tblInventory.getSelectedRow();
         int modelSelectedIndex = tblInventory.convertRowIndexToModel(viewSelectedIndex);
@@ -196,15 +203,18 @@ public class InventoryManagement {
                 selectedSparePart,
                 expectedDate,
                 qty,
-                (result) -> {
-                    if(result == null) return;
-                    if(result instanceof Exception){
-                        loadingSpinner.stop();
-                        ((Exception) result).printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Order placement failed!", "Error", JOptionPane.ERROR_MESSAGE);
-                    }else{
+                new SendOrderPlacementCallback() {
+                    @Override
+                    public void onSuccess() {
                         loadingSpinner.stop();
                         JOptionPane.showMessageDialog(null, "Order placement successful!", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                    @Override
+                    public void onFailed(Exception ex) {
+                        loadingSpinner.stop();
+                        JOptionPane.showMessageDialog(null, "Order placement failed!");
+                        ex.printStackTrace();
                     }
                 }
         );
@@ -263,5 +273,32 @@ public class InventoryManagement {
                 sorter.setRowFilter(null);
             }
         }
+    }
+
+    public void reload() {
+        Thread loadDataThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadSpareParts();
+            }
+        });
+
+        Thread waitThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    loadDataThread.join();
+
+                    renderTable();
+                    tblInventory.revalidate();
+                    tblInventory.repaint();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        loadDataThread.start();
+        waitThread.start();
     }
 }

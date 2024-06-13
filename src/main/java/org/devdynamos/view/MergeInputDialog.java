@@ -104,7 +104,8 @@ public class MergeInputDialog extends JDialog {
     private void onOK() {
         final double newReceivedPrice = Double.parseDouble(txtReceivedPrice.getText());
         final double newSellingPrice = Double.parseDouble(txtSellingPrice.getText());
-        boolean priceChanged = order.getReceivedPrice() != newReceivedPrice || order.getSellingPrice() != newSellingPrice;
+        final boolean priceIsZero = order.getSellingPrice() == 0 && order.getReceivedPrice() == 0;
+        final boolean priceChanged = !priceIsZero && (order.getReceivedPrice() != newReceivedPrice || order.getSellingPrice() != newSellingPrice);
         final int currentQty = priceChanged ? order.getQuantity() : (order.getCurrentQuantity() + order.getQuantity());
         final int initialQty = priceChanged ? order.getQuantity() : (order.getCurrentQuantity() + order.getQuantity());
 
