@@ -109,19 +109,7 @@ public class InventoryManagement {
         btnUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SparePart selectedSparePart = inventoryTableModel.getSparePartAt(tblInventory.getSelectedRow());
-                InsertSparePartDialog updateSparePartDialog = new InsertSparePartDialog(
-                        selectedSparePart,
-                        (dialog, sparePart) -> {
-                            inventoryController.updateSparePart(sparePart.getPartId(), sparePart.toHashMap());
-                            updateView();
-                            dialog.dispose();
-                        },
-                        (dialog) -> {
-                            dialog.dispose();
-                        }
-                );
-                updateSparePartDialog.showDialog();
+                handleUpdate();
             }
         });
 
@@ -129,13 +117,7 @@ public class InventoryManagement {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SparePart selectedSparePart = inventoryTableModel.getSparePartAt(tblInventory.getSelectedRow());
-                final int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selectedSparePart.getName() + " from the system?");
-
-                if(res == 0){
-                    inventoryController.deleteSparePart(selectedSparePart.getPartId());
-                    updateView();
-                }
+                handleDelete();
             }
         });
 
@@ -172,6 +154,37 @@ public class InventoryManagement {
                 behaveDeleteButton(selectedIndex);
             }
         });
+    }
+
+    private void handleUpdate() {
+        int viewSelectedIndex = tblInventory.getSelectedRow();
+        int modelSelectedIndex = tblInventory.convertRowIndexToModel(viewSelectedIndex);
+        SparePart selectedSparePart = inventoryTableModel.getSparePartAt(modelSelectedIndex);
+
+        InsertSparePartDialog updateSparePartDialog = new InsertSparePartDialog(
+                selectedSparePart,
+                (dialog, sparePart) -> {
+                    inventoryController.updateSparePart(sparePart.getPartId(), sparePart.toHashMap());
+                    updateView();
+                    dialog.dispose();
+                },
+                (dialog) -> {
+                    dialog.dispose();
+                }
+        );
+        updateSparePartDialog.showDialog();
+    }
+
+    private void handleDelete() {
+        int viewSelectedIndex = tblInventory.getSelectedRow();
+        int modelSelectedIndex = tblInventory.convertRowIndexToModel(viewSelectedIndex);
+        SparePart selectedSparePart = inventoryTableModel.getSparePartAt(modelSelectedIndex);
+        final int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selectedSparePart.getName() + " from the system?");
+
+        if(res == 0){
+            inventoryController.deleteSparePart(selectedSparePart.getPartId());
+            updateView();
+        }
     }
 
     private void executePlaceOrder(int qty, String expectedDate){

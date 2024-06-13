@@ -179,7 +179,6 @@ public class DBManager {
             }
         }catch (Exception ex){
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         return resultsList;
@@ -229,10 +228,73 @@ public class DBManager {
 
             return id;
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
 
             return -1;
         }
+    }
+
+    public static int replace(String table, String[] columns, Object[] values) {
+        try{
+            if(connection == null) throw new SQLException("Connection is null");
+
+            String query = "replace into " + table + " (" + String.join(",", columns) + ") values (" + String.join(",", ArrayUtils.map(columns, (element) -> {
+                return "?";
+            })) + ")";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            for (int i = 0; i < values.length; i++) {
+                if(values[i] instanceof Boolean){
+                    preparedStatement.setBoolean((i+1), (boolean)values[i]);
+                }else if(values[i] instanceof Integer){
+                    preparedStatement.setInt((i+1), (int)(values[i]));
+                }else if(values[i] instanceof Short){
+                    preparedStatement.setShort((i+1), (short)values[i]);
+                }else if(values[i] instanceof Long){
+                    preparedStatement.setLong((i+1), (long)values[i]);
+                }else if(values[i] instanceof Float){
+                    preparedStatement.setFloat((i+1), (float)values[i]);
+                }else if(values[i] instanceof Double){
+                    preparedStatement.setDouble((i+1), (double)values[i]);
+                }else if(values[i] instanceof String){
+                    preparedStatement.setString((i+1), (String)values[i]);
+                }
+            }
+
+            preparedStatement.addBatch();
+
+            int id = -1;
+
+            // execute insertion
+            final int affectedRows = preparedStatement.executeUpdate();
+            if(affectedRows > 0) {
+                try(ResultSet rs = preparedStatement.getGeneratedKeys()){
+                    if(rs.next()){
+                        id = rs.getInt(1);
+                    }
+                }
+            }
+
+            return id;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+
+    public static int insertOrReplace(String table, String[] columns, Object[] values) {
+        if(connection == null) return -1;
+
+        int id = insert(table, columns, values);
+        if(id < 0){
+            id = replace(table, columns, values);
+            if(id > -1){
+                return id;
+            }
+        }
+        return -1;
     }
 
     public static void insertBatch(String table, String[] columns, Object[][] values) {
@@ -282,14 +344,12 @@ public class DBManager {
             // commit transaction
             connection.commit();
         }catch (SQLException ex){
-            System.err.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
 
             try{
                 connection.rollback();
             }catch (SQLException ex2){
-                System.err.println(ex2.getMessage());
-                JOptionPane.showMessageDialog(null, ex2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
         }
     }
@@ -322,7 +382,7 @@ public class DBManager {
 
             return affectedRows;
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
 
             return -1;
         }
@@ -338,7 +398,7 @@ public class DBManager {
             String query = "delete from " + table + " where " + condition;
             statement.executeUpdate(query);
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 }

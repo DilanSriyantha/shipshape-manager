@@ -86,9 +86,16 @@ public class InventoryController {
     }
 
     public void insertSparePart(Object[] values){
-        final int res = DBManager.insert("spareparts", new String[] { "supplierId", "partName", "receivedPrice", "sellingPrice", "quantity" }, values);
+        final int res = DBManager.insert("spareparts", new String[] { "supplierId", "partName", "receivedPrice", "sellingPrice", "currentQuantity", "initialQuantity" }, values);
         if(res > 0){
-            JOptionPane.showMessageDialog(null, "Spare part inserted successfully.");
+            JOptionPane.showMessageDialog(null, "Spare part inserted successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public void insertOrReplaceSparePart(Object[] values){
+        final int res = DBManager.insertOrReplace("spareparts", new String[] { "partId", "supplierId", "partName", "receivedPrice", "sellingPrice", "currentQuantity", "initialQuantity" }, values);
+        if(res > 0) {
+            JOptionPane.showMessageDialog(null, "Merged successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -115,7 +122,7 @@ public class InventoryController {
     public void updateSparePart(int id, HashMap<String, Object> newValues){
         final int res = DBManager.update("spareparts", newValues, "partId=" + id);
 
-        if(res > 0)
+        if(res > -1)
             JOptionPane.showMessageDialog(null, newValues.get("partName") + " updated successfully.");
     }
 

@@ -80,6 +80,7 @@ public class HomeView {
             @Override
             public void run() {
                 while(true){
+                    if(DBManager.getConnection() != null) continue;
                     DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
                     try {
                         Thread.sleep(1000);

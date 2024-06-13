@@ -224,62 +224,50 @@
         <properties/>
         <border type="none"/>
         <children>
-          <tabbedpane id="6037f" binding="tabPanelCategory">
-            <constraints border-constraint="Center"/>
-            <properties>
-              <tabPlacement value="1"/>
-            </properties>
+          <grid id="7521" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints border-constraint="North"/>
+            <properties/>
             <border type="none"/>
             <children>
-              <grid id="7a342" binding="tabBestSellers" layout-manager="BorderLayout" hgap="0" vgap="0">
-                <constraints>
-                  <tabbedpane title="Best Sellers"/>
-                </constraints>
+              <component id="dd2a1" class="javax.swing.JButton" binding="btnAll">
+                <constraints/>
+                <properties>
+                  <background color="-8342825"/>
+                  <foreground color="-13816531"/>
+                  <text value="All"/>
+                </properties>
+              </component>
+              <component id="b13c0" class="javax.swing.JButton" binding="btnProducts">
+                <constraints/>
+                <properties>
+                  <background color="-4665371"/>
+                  <foreground color="-13816531"/>
+                  <text value="Products"/>
+                </properties>
+              </component>
+              <component id="ec395" class="javax.swing.JButton" binding="btnServices">
+                <constraints/>
+                <properties>
+                  <background color="-4665371"/>
+                  <foreground color="-13816531"/>
+                  <text value="Services"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <scrollpane id="41a08">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="empty"/>
+            <children>
+              <grid id="65c8a" binding="pnlProducts" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
                 <properties/>
                 <border type="none"/>
-                <children>
-                  <scrollpane id="40cb2">
-                    <constraints border-constraint="Center"/>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <grid id="45465" binding="pnlBestSellers" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                        <constraints/>
-                        <properties>
-                          <autoscrolls value="false"/>
-                          <maximumSize width="32767" height="32767"/>
-                        </properties>
-                        <border type="none"/>
-                        <children/>
-                      </grid>
-                    </children>
-                  </scrollpane>
-                </children>
-              </grid>
-              <grid id="e5dd0" binding="tabAll" layout-manager="BorderLayout" hgap="0" vgap="0">
-                <constraints>
-                  <tabbedpane title="All"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <scrollpane id="a63f1">
-                    <constraints border-constraint="Center"/>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <grid id="47e7c" binding="pnlAll" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                        <constraints/>
-                        <properties/>
-                        <border type="none"/>
-                        <children/>
-                      </grid>
-                    </children>
-                  </scrollpane>
-                </children>
+                <children/>
               </grid>
             </children>
-          </tabbedpane>
+          </scrollpane>
         </children>
       </grid>
       <grid id="318d6" layout-manager="BorderLayout" hgap="0" vgap="0">

@@ -84,6 +84,8 @@ public class EmployeesView {
         this.tblEmp.setFocusable(false);
         this.tblEmp.getTableHeader().setReorderingAllowed(false);
         this.tblEmp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        checkBoxFilterAllocatedEmp.setSelected(false);
     }
 
     private void initButtons() {
@@ -155,13 +157,7 @@ public class EmployeesView {
         btnUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Employee employee = employeeTableModel.getEmployeeAt(tblEmp.getSelectedRow());
-
-                InsertEmployeeDialog updateEmployeeDialog = new InsertEmployeeDialog();
-                updateEmployeeDialog.showDialog(employee);
-
-                loadEmployees();
-                renderTable();
+                handleUpdate();
             }
         });
 
@@ -169,15 +165,33 @@ public class EmployeesView {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Employee employee = employeeTableModel.getEmployeeAt(tblEmp.getSelectedRow());
-
-                int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + employee.getEmpName() + " from the system?", "Are you sure?", JOptionPane.YES_NO_OPTION);
-                if(confirmed == 0) employee.delete();
-
-                loadEmployees();
-                renderTable();
+                handleDelete();
             }
         });
+    }
+
+    private void handleUpdate() {
+        int viewSelectedRowIndex = tblEmp.getSelectedRow();
+        int modelSelectedRowIndex = tblEmp.convertRowIndexToModel(viewSelectedRowIndex);
+        Employee employee = employeeTableModel.getEmployeeAt(modelSelectedRowIndex);
+
+        InsertEmployeeDialog updateEmployeeDialog = new InsertEmployeeDialog();
+        updateEmployeeDialog.showDialog(employee);
+
+        loadEmployees();
+        renderTable();
+    }
+
+    private void handleDelete() {
+        int viewSelectedRowIndex = tblEmp.getSelectedRow();
+        int modelSelectedRowIndex = tblEmp.convertRowIndexToModel(viewSelectedRowIndex);
+        Employee employee = employeeTableModel.getEmployeeAt(modelSelectedRowIndex);
+
+        int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure want to delete " + employee.getEmpName() + " from the system?", "Are you sure?", JOptionPane.YES_NO_OPTION);
+        if(confirmed == 0) employee.delete();
+
+        loadEmployees();
+        renderTable();
     }
 
     private void behaveAllocateBtn(int row) {

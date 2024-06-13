@@ -13,7 +13,7 @@ public class LoadingSpinner extends JDialog {
         setModal(true);
     }
 
-    public void start() {
+    private void start() {
         this.setUndecorated(true);
         this.pack();
         this.setLocationRelativeTo(null);

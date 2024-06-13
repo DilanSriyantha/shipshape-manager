@@ -3,11 +3,13 @@ package org.devdynamos.utils;
 import org.devdynamos.models.Order;
 
 import javax.swing.table.AbstractTableModel;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PendingOrdersTableModel extends AbstractTableModel {
     private final List<Order> pendingOrders;
-    private final String[] columnNames = { "ID", "Caption", "Supplier", "Product", "Quantity", "Expected Delivery Date", "Date Placed" };
+    private final String[] columnNames = { "ID", "Caption", "Supplier", "Product", "Quantity", "Expected Delivery Date", "Date Placed", "Delivered" };
 
     public PendingOrdersTableModel(List<Order> pendingOrders){
         this.pendingOrders = pendingOrders;
@@ -39,6 +41,7 @@ public class PendingOrdersTableModel extends AbstractTableModel {
             case 4: return order.getQuantity();
             case 5: return order.getExpectedDeliveryDate();
             case 6: return order.getPlacedDate();
+            case 7: return order.getDelivered();
             default: throw new IllegalArgumentException("Invalid column index");
         }
     }
@@ -51,5 +54,18 @@ public class PendingOrdersTableModel extends AbstractTableModel {
 
     public Order getOrderAt(int rowIndex){
         return pendingOrders.get(rowIndex);
+    }
+
+    public Order[] getRelevantOrdersAt(int[] rowIndexes){
+        Order[] relevantOrders = ArrayUtils.filter(pendingOrders, (order) -> {
+            for(int i : rowIndexes){
+                if(ArrayUtils.indexOf(pendingOrders, order) == i && !order.getDelivered()){
+                    return order;
+                }
+            }
+            return null;
+        });
+
+        return relevantOrders;
     }
 }

@@ -78,7 +78,7 @@ public class InsertSparePartDialog extends JDialog {
         txtName.setText(this.sparePart.getName());
         txtReceivedPrice.setText(String.valueOf(this.sparePart.getReceivedPrice()));
         txtSellingPrice.setText(String.valueOf(this.sparePart.getSellingPrice()));
-        txtQty.setText(String.valueOf(this.sparePart.getQuantity()));
+        txtQty.setText(String.valueOf(this.sparePart.getCurrentQuantity()));
     }
 
     private void initTextFieldRestrictions() {
@@ -188,12 +188,22 @@ public class InsertSparePartDialog extends JDialog {
 
     private void onOK() {
         if(this.sparePart == null){
-            this.sparePart = new SparePart(-1, this.supplier.getSupplierId(), this.supplier.getSupplierName(), txtName.getText(), Double.parseDouble(txtReceivedPrice.getText()), Double.parseDouble(txtSellingPrice.getText()), Integer.parseInt(txtQty.getText()), false, false);
+            this.sparePart = new SparePart(
+                    -1,
+                    this.supplier.getSupplierId(),
+                    this.supplier.getSupplierName(),
+                    txtName.getText(), Double.parseDouble(txtReceivedPrice.getText()),
+                    Double.parseDouble(txtSellingPrice.getText()),
+                    Integer.parseInt(txtQty.getText()),
+                    Integer.parseInt(txtQty.getText()),
+                    false,
+                    false
+            );
         }else{
             this.sparePart.setName(txtName.getText());
             this.sparePart.setReceivedPrice(Double.parseDouble(txtReceivedPrice.getText()));
             this.sparePart.setSellingPrice(Double.parseDouble(txtSellingPrice.getText()));
-            this.sparePart.setQuantity(Integer.parseInt(txtQty.getText()));
+            this.sparePart.setCurrentQuantity(Integer.parseInt(txtQty.getText()));
         }
 
         this.positiveCallback.execute(this, this.sparePart);

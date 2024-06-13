@@ -356,6 +356,11 @@ public class DatePicker extends JPanel {
         private final DateBlockOnClickCallback onClickCallback;
         private boolean selected = false;
 
+        private final Color IDLE_COLOR = Color.WHITE;
+        private final Color HOVER_COLOR = new Color(226, 236, 244);
+        private final Color CLICKED_COLOR = new Color(90, 149, 204);
+        private final Color SELECTED_COLOR = new Color(138, 178, 215);
+
         public DateBlock(int date, int position, int mode, DateBlockOnClickCallback onClickCallback){
             this.date = date;
             this.position = position;
@@ -378,12 +383,12 @@ public class DatePicker extends JPanel {
                 this.selected = true;
 
                 if(mode != FILL) return;
-                setBackground(Color.GRAY);
+                setBackground(SELECTED_COLOR);
             }else{
                 this.selected = false;
 
                 if(mode != FILL) return;
-                setBackground(Color.WHITE);
+                setBackground(IDLE_COLOR);
             }
         }
 
@@ -420,26 +425,26 @@ public class DatePicker extends JPanel {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     if(mode == FILL && !selected){
-                        setBackground(Color.GRAY);
+                        setBackground(CLICKED_COLOR);
                     }
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     if(mode == FILL && !selected)
-                        setBackground(Color.LIGHT_GRAY);
+                        setBackground(SELECTED_COLOR);
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     if(mode == FILL && !selected)
-                        setBackground(Color.LIGHT_GRAY);
+                        setBackground(HOVER_COLOR);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
                     if(mode == FILL && !selected)
-                        setBackground(Color.WHITE);
+                        setBackground(IDLE_COLOR);
                 }
             });
 

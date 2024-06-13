@@ -37,7 +37,7 @@ public class InventoryTableModel extends AbstractTableModel {
             case 2: return sparePart.getSupplierName();
             case 3: return sparePart.getReceivedPrice();
             case 4: return sparePart.getSellingPrice();
-            case 5: return sparePart.getQuantity();
+            case 5: return sparePart.getCurrentQuantity();
             case 6: return sparePart.isOnShip();
             default: throw new IllegalArgumentException("Invalid column index");
         }

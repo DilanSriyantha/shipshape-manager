@@ -11,21 +11,23 @@ public class SparePart {
     private String partName;
     private double receivedPrice;
     private double sellingPrice;
-    private int quantity;
+    private int currentQuantity;
+    private int initialQuantity;
     private boolean onShip;
     private boolean topSeller;
     private Date date;
 
     public SparePart() {}
 
-    public SparePart(int partId, int supplierId, String supplierName, String partName, double receivedPrice, double sellingPrice, int quantity, boolean onShip, boolean topSeller) {
+    public SparePart(int partId, int supplierId, String supplierName, String partName, double receivedPrice, double sellingPrice, int currentQuantity, int initialQuantity, boolean onShip, boolean topSeller) {
         this.partId = partId;
         this.supplierId = supplierId;
         this.supplierName = supplierName;
         this.partName = partName;
         this.receivedPrice = receivedPrice;
         this.sellingPrice = sellingPrice;
-        this.quantity = quantity;
+        this.currentQuantity = currentQuantity;
+        this.initialQuantity = initialQuantity;
         this.onShip = onShip;
         this.topSeller = topSeller;
     }
@@ -86,12 +88,20 @@ public class SparePart {
         this.sellingPrice = sellingPrice;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getCurrentQuantity() {
+        return currentQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCurrentQuantity(int currentQuantity) {
+        this.currentQuantity = currentQuantity;
+    }
+
+    public int getInitialQuantity() {
+        return initialQuantity;
+    }
+
+    public void setInitialQuantity(int initialQuantity) {
+        this.initialQuantity = initialQuantity;
     }
 
     public boolean isOnShip() {
@@ -126,7 +136,8 @@ public class SparePart {
                 ", name='" + partName + '\'' +
                 ", receivedPrice=" + receivedPrice +
                 ", sellingPrice=" + sellingPrice +
-                ", quantity=" + quantity +
+                ", currentQuantity=" + currentQuantity +
+                ", initialQuantity=" + initialQuantity +
                 ", onShip=" + onShip +
                 ", topSeller=" + topSeller +
                 '}';
@@ -139,7 +150,8 @@ public class SparePart {
             put("partName", partName);
             put("receivedPrice", receivedPrice);
             put("sellingPrice", sellingPrice);
-            put("quantity", quantity);
+            put("currentQuantity", currentQuantity);
+            put("initialQuantity", initialQuantity);
             put("onShip", onShip);
             put("topSeller", topSeller);
         }};
@@ -149,11 +161,24 @@ public class SparePart {
 
     public Object[] toObjectArray() {
         return new Object[] {
-                this.supplierId,
-                this.partName,
-                this.receivedPrice,
-                this.sellingPrice,
-                this.quantity
+                supplierId,
+                partName,
+                receivedPrice,
+                sellingPrice,
+                currentQuantity,
+                initialQuantity
+        };
+    }
+
+    public Object[] toObjectArray_toReplace() {
+        return new Object[] {
+                partId,
+                supplierId,
+                partName,
+                receivedPrice,
+                sellingPrice,
+                currentQuantity,
+                initialQuantity
         };
     }
 }

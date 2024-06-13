@@ -93,7 +93,20 @@ public class CashierListItem extends JPanel {
         if(this.sparePart != null){
             onClickCallback.execute(this.sparePart);
         }else{
-            onClickCallback.execute(new SparePart(0, 0, "UNKNOWN", this.text, 0.00, 0.00, 0, false, false));
+            onClickCallback.execute(
+                    new SparePart(
+                            0,
+                            0,
+                            "UNKNOWN",
+                            this.text,
+                            0.00,
+                            0.00,
+                            0,
+                            0,
+                            false,
+                            false
+                    )
+            );
         }
     }
 }
