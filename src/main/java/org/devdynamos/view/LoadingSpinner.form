@@ -30,6 +30,8 @@
                   <component id="663b1" class="javax.swing.JLabel">
                     <constraints border-constraint="Center"/>
                     <properties>
+                      <horizontalAlignment value="0"/>
+                      <horizontalTextPosition value="0"/>
                       <icon value="images/spinner_96.gif"/>
                       <text value=""/>
                     </properties>

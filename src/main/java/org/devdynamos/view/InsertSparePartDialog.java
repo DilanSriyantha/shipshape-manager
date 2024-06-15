@@ -214,18 +214,18 @@ public class InsertSparePartDialog extends JDialog {
     }
 
     public void showDialog() {
-        this.setTitle("Insert Spare Part");
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        setTitle("Insert Spare Part");
+        setResizable(false);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public void showDialog(SparePart sparePart){
-        this.setTitle("Insert Spare Part");
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        setTitle("Insert Spare Part");
+        setResizable(false);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 }

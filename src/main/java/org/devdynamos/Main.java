@@ -28,6 +28,7 @@ public class Main {
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/find_connection.png"), "SearchConnectionIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/merge.png"), "MergeIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/warning.png"), "WarningIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/service_management.png"), "ServiceIcon");
 
         RootView rootView = new RootView();
         rootView.show();

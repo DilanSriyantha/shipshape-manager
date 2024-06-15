@@ -184,9 +184,8 @@ public class Employee {
 
     public int getMaxSkillId(){
         Skill sk = ArrayUtils.find(this.skills, (lastElement, element) -> {
-            if(element.getSkillId() > lastElement.getSkillId()){
+            if(element.getSkillId() > lastElement.getSkillId())
                 return element;
-            }
             return null;
         });
 

@@ -3,6 +3,7 @@ package org.devdynamos.components;
 import org.devdynamos.interfaces.OrderItemRecordDeleteCallback;
 import org.devdynamos.models.OrderItem;
 import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.Console;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -40,6 +41,8 @@ public class OrderItemRecord extends JPanel {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.total = (unitPrice * quantity);
+
+        Console.log(total);
 
         initComponent();
     }
@@ -90,27 +93,27 @@ public class OrderItemRecord extends JPanel {
         pnlInfoContainer.setBackground(new Color(213, 213, 213));
         pnlInfoContainer.setPreferredSize(new Dimension(150, defaultHeight));
 
-        lblName = new JLabel(String.valueOf(this.name));
+        lblName = new JLabel(String.valueOf("<html>" + this.name + "</html>"));
         lblName.setHorizontalTextPosition(JLabel.CENTER);
         lblName.setHorizontalAlignment(JLabel.CENTER);
         lblName.setVerticalTextPosition(JLabel.BOTTOM);
         lblName.setVerticalAlignment(JLabel.BOTTOM);
-        lblName.setFont(new Font("Arial", Font.PLAIN, 16));
+        lblName.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        lblUnitPrice = new JLabel(this.quantity + " x " + this.unitPrice);
+        lblUnitPrice = new JLabel("<html>" + this.quantity + " x " + this.unitPrice + "</html>");
         lblUnitPrice.setHorizontalTextPosition(JLabel.CENTER);
         lblUnitPrice.setHorizontalAlignment(JLabel.CENTER);
         lblUnitPrice.setVerticalTextPosition(JLabel.CENTER);
-        lblUnitPrice.setFont(new Font("Arial", Font.PLAIN, 16));
+        lblUnitPrice.setFont(new Font("Arial", Font.PLAIN, 14));
 
         pnlInfoContainer.add(lblName, BorderLayout.NORTH);
         pnlInfoContainer.add(lblUnitPrice, BorderLayout.CENTER);
 
-        lblTotal = new JLabel(String.valueOf(this.total));
+        lblTotal = new JLabel(String.valueOf("<html>" + this.total + "</html>"));
         lblTotal.setHorizontalTextPosition(JLabel.TRAILING);
         lblTotal.setHorizontalAlignment(JLabel.TRAILING);
         lblTotal.setVerticalTextPosition(JLabel.CENTER);
-        lblTotal.setFont(new Font("Arial", Font.PLAIN, 16));
+        lblTotal.setFont(new Font("Arial", Font.PLAIN, 14));
 
         pnlActionsContainer = new JPanel();
         pnlActionsContainer.setLayout(new GridLayout(1, 1));

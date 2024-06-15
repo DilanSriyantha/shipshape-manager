@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.CashierDashboard">
   <grid id="27dc6" binding="pnlRoot" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="627" height="572"/>
+      <xy x="20" y="20" width="711" height="572"/>
     </constraints>
     <properties>
       <preferredSize width="800" height="600"/>
@@ -22,7 +22,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="ed6fa" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="ed6fa" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="10" bottom="0" right="10"/>
                 <constraints border-constraint="North"/>
                 <properties/>
@@ -36,6 +36,40 @@
                       <background color="-12881462"/>
                       <foreground color="-1250068"/>
                       <text value="Add Customer"/>
+                      <toolTipText value="CTRL + SHIFT + C"/>
+                    </properties>
+                  </component>
+                  <component id="12795" class="javax.swing.JButton" binding="btnAddDiscount">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-12881462"/>
+                      <foreground color="-1250068"/>
+                      <text value="Add Discount"/>
+                      <toolTipText value="CTRL + SHIFT + D"/>
+                    </properties>
+                  </component>
+                  <component id="3df1" class="javax.swing.JButton" binding="btnVat">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-12881462"/>
+                      <foreground color="-1250068"/>
+                      <text value="Add VAT"/>
+                      <toolTipText value="CTRL + SHIFT + V"/>
+                    </properties>
+                  </component>
+                  <component id="9db04" class="javax.swing.JButton" binding="btnAddServiceCharge">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-12881462"/>
+                      <foreground color="-1250068"/>
+                      <text value="Add Service Charge"/>
+                      <toolTipText value="CTRL + SHIFT + E"/>
                     </properties>
                   </component>
                 </children>
@@ -99,7 +133,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="ef8a1" class="javax.swing.JLabel">
+                      <component id="ef8a1" class="javax.swing.JLabel" binding="lblDiscountRate">
                         <constraints border-constraint="Center"/>
                         <properties>
                           <font size="16"/>
@@ -142,12 +176,12 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="cd0f" class="javax.swing.JLabel">
+                      <component id="cd0f" class="javax.swing.JLabel" binding="lblVatRate">
                         <constraints border-constraint="Center"/>
                         <properties>
                           <font size="16"/>
                           <horizontalAlignment value="11"/>
-                          <text value="0.00"/>
+                          <text value="0.00%"/>
                         </properties>
                       </component>
                     </children>
@@ -185,12 +219,12 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="43069" class="javax.swing.JLabel">
+                      <component id="43069" class="javax.swing.JLabel" binding="lblServiceChargeRate">
                         <constraints border-constraint="Center"/>
                         <properties>
                           <font size="16"/>
                           <horizontalAlignment value="11"/>
-                          <text value="0.00"/>
+                          <text value="0.00%"/>
                         </properties>
                       </component>
                     </children>
@@ -211,6 +245,7 @@
                       <font size="16"/>
                       <foreground color="-1250068"/>
                       <text value="Total"/>
+                      <toolTipText value="CTRL + ENTER"/>
                     </properties>
                   </component>
                 </children>
@@ -224,35 +259,80 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="7521" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="7521" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints border-constraint="North"/>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="dd2a1" class="javax.swing.JButton" binding="btnAll">
-                <constraints/>
-                <properties>
-                  <background color="-8342825"/>
-                  <foreground color="-13816531"/>
-                  <text value="All"/>
-                </properties>
-              </component>
-              <component id="b13c0" class="javax.swing.JButton" binding="btnProducts">
-                <constraints/>
-                <properties>
-                  <background color="-4665371"/>
-                  <foreground color="-13816531"/>
-                  <text value="Products"/>
-                </properties>
-              </component>
-              <component id="ec395" class="javax.swing.JButton" binding="btnServices">
-                <constraints/>
-                <properties>
-                  <background color="-4665371"/>
-                  <foreground color="-13816531"/>
-                  <text value="Services"/>
-                </properties>
-              </component>
+              <grid id="e2b87" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="dd2a1" class="javax.swing.JButton" binding="btnAll">
+                    <constraints/>
+                    <properties>
+                      <background color="-8342825"/>
+                      <foreground color="-13816531"/>
+                      <text value="All"/>
+                    </properties>
+                  </component>
+                  <component id="b13c0" class="javax.swing.JButton" binding="btnProducts">
+                    <constraints/>
+                    <properties>
+                      <background color="-4665371"/>
+                      <foreground color="-13816531"/>
+                      <text value="Products"/>
+                    </properties>
+                  </component>
+                  <component id="ec395" class="javax.swing.JButton" binding="btnServices">
+                    <constraints/>
+                    <properties>
+                      <background color="-4665371"/>
+                      <foreground color="-13816531"/>
+                      <text value="Services"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="cca51" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="3b616" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="9884e" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties/>
+                      </component>
+                      <component id="b004e" class="javax.swing.JButton" binding="searchButton" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-13816531"/>
+                          <foreground color="-1250068"/>
+                          <text value="Search"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
             </children>
           </grid>
           <scrollpane id="41a08">

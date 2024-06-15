@@ -343,11 +343,13 @@ public class DBManager {
 
             // commit transaction
             connection.commit();
+            connection.setAutoCommit(true);
         }catch (SQLException ex){
             ex.printStackTrace();
 
             try{
                 connection.rollback();
+                connection.setAutoCommit(true);
             }catch (SQLException ex2){
                 ex.printStackTrace();
             }
@@ -395,7 +397,8 @@ public class DBManager {
             }
 
             Statement statement = connection.createStatement();
-            String query = "delete from " + table + " where " + condition;
+            String query = "delete from " + table + " where " + condition + ";";
+            Console.log(query);
             statement.executeUpdate(query);
         }catch (Exception ex){
             ex.printStackTrace();

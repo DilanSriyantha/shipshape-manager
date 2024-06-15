@@ -18,6 +18,8 @@ public class HomeView {
     private JButton btnSuppliers;
     private JButton btnSalesReport;
     private JLabel lblDBConStatus;
+    private JButton btnServiceManagement;
+    private JButton btnCustomerManagement;
     private RootView rootView;
 
     public HomeView(RootView rootView){
@@ -64,6 +66,20 @@ public class HomeView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.navigate(NavPath.SUPPLIERS, new SuppliersManagement(rootView).getRootPanel());
+            }
+        });
+
+        btnServiceManagement.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.SERVICES, new ServiceManagement(rootView).getRootPanel());
+            }
+        });
+
+        btnCustomerManagement.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.CUSTOMERS, new CustomerManagement(rootView).getRootPanel());
             }
         });
 

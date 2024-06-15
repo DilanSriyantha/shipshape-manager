@@ -95,7 +95,7 @@ public class SuppliersManagement {
         btnUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Supplier selectedSupplier = suppliersTableModel.getSupplierAt(tblSuppliers.getSelectedRow());
+                Supplier selectedSupplier = suppliersTableModel.getSupplierAt(getSelectedRowIndex());
                 InsertSupplierDialog updateSupplierDialog = new InsertSupplierDialog(
                         selectedSupplier,
                         (dialog, supplier) -> {
@@ -115,7 +115,7 @@ public class SuppliersManagement {
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Supplier selectedSupplier = suppliersTableModel.getSupplierAt(tblSuppliers.getSelectedRow());
+                Supplier selectedSupplier = suppliersTableModel.getSupplierAt(getSelectedRowIndex());
                 final int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + selectedSupplier.getSupplierName() + " from the system?");
 
                 if(res == 0){
@@ -155,11 +155,20 @@ public class SuppliersManagement {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() == 2 && !e.isConsumed()){
-                    Supplier selectedSupplier = suppliersTableModel.getSupplierAt(tblSuppliers.getSelectedRow());
+                    Supplier selectedSupplier = suppliersTableModel.getSupplierAt(getSelectedRowIndex());
                     rootView.navigate(NavPath.SUPPLIER_PRODUCTS, new ProductsView(rootView, selectedSupplier).getRootPanel());
                 }
             }
         });
+    }
+
+    private int getSelectedRowIndex() {
+        if(tblSuppliers.getSelectedRow() == -1) return -1;
+
+        int viewSelectedIndex = tblSuppliers.getSelectedRow();
+        int modelSelectedIndex = tblSuppliers.convertRowIndexToModel(viewSelectedIndex);
+
+        return modelSelectedIndex;
     }
 
     private void behaveUpdateButton(int selectedIndex){
@@ -196,7 +205,6 @@ public class SuppliersManagement {
 
         RowFilter<Object, Object> idFilter = RowFilter.regexFilter("(?i)" + key.toLowerCase(), 0);
         RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + key.toLowerCase(), 1);
-        RowFilter<Object, Object> onShipFilter = RowFilter.regexFilter("(?i)true", 6);
 
         if(!key.isEmpty()){
             sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(idFilter, nameFilter)));

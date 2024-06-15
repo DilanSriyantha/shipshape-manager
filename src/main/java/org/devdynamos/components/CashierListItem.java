@@ -1,6 +1,7 @@
 package org.devdynamos.components;
 
 import org.devdynamos.interfaces.CashierListItemOnClickCallback;
+import org.devdynamos.models.Service;
 import org.devdynamos.models.SparePart;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class CashierListItem extends JPanel {
     private ImageIcon icon;
 
     private SparePart sparePart;
+    private Service service;
 
     private CashierListItemOnClickCallback onClickCallback;
 
@@ -27,9 +29,10 @@ public class CashierListItem extends JPanel {
         initComponent();
     }
 
-    public CashierListItem(String text, ImageIcon icon, CashierListItemOnClickCallback onClickCallback){
-        this.text = text;
+    public CashierListItem(Service service, ImageIcon icon, CashierListItemOnClickCallback<Service> onClickCallback){
+        this.text = service.getServiceName();
         this.icon = icon;
+        this.service = service;
         this.onClickCallback = onClickCallback;
 
         initComponent();
@@ -43,7 +46,7 @@ public class CashierListItem extends JPanel {
         initComponent();
     }
 
-    public CashierListItem(SparePart sparePart, ImageIcon icon, CashierListItemOnClickCallback onClickCallback){
+    public CashierListItem(SparePart sparePart, ImageIcon icon, CashierListItemOnClickCallback<SparePart> onClickCallback){
         this.text = sparePart.getName();
         this.icon = icon;
         this.sparePart = sparePart;
@@ -91,22 +94,9 @@ public class CashierListItem extends JPanel {
         if(this.onClickCallback == null) return;
 
         if(this.sparePart != null){
-            onClickCallback.execute(this.sparePart);
+            onClickCallback.execute(sparePart);
         }else{
-            onClickCallback.execute(
-                    new SparePart(
-                            0,
-                            0,
-                            "UNKNOWN",
-                            this.text,
-                            0.00,
-                            0.00,
-                            0,
-                            0,
-                            false,
-                            false
-                    )
-            );
+            onClickCallback.execute(service);
         }
     }
 }

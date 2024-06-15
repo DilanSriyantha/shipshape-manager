@@ -3,7 +3,9 @@ package org.devdynamos.view;
 import org.devdynamos.components.CashierListItem;
 import org.devdynamos.components.OrderItemRecord;
 import org.devdynamos.contollers.CashierDashboardController;
+import org.devdynamos.interfaces.GetProductsAndServicesCallback;
 import org.devdynamos.models.OrderItem;
+import org.devdynamos.models.Service;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.Console;
@@ -14,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.List;
 
 public class CashierDashboard {
     private JPanel pnlRoot;
@@ -30,30 +33,37 @@ public class CashierDashboard {
     private JButton btnAll;
     private JButton btnProducts;
     private JButton btnServices;
+    private JTextField textField1;
+    private JButton searchButton;
+    private JButton btnAddDiscount;
+    private JButton btnVat;
+    private JLabel lblDiscountRate;
+    private JLabel lblVatRate;
+    private JLabel lblServiceChargeRate;
+    private JButton btnAddServiceCharge;
 
     private final int ALL = 0;
     private final int PRODUCTS = 1;
     private final int SERVICES = 2;
     private final Color SELECTED_COLOR = new Color(138, 178, 215);
     private final Color IDLE_COLOR = new Color(184, 207, 229);
-
     private int selectedTab = ALL;
-
     private Dimension orderItemRecordsListSize;
-
     private RootView rootView;
-
     private final CashierDashboardController cashierDashboardController;
+    private List<SparePart> sparePartList;
+    private List<Service> serviceList;
 
     public CashierDashboard(RootView rootView){
         this.rootView = rootView;
         this.cashierDashboardController = new CashierDashboardController();
 
-        renderQuickItemsPanel();
+        loadProductsAndServices();
         renderOrderItemRecords();
         initBackButton();
         initAddCustomerButton();
         initTabButtons();
+        registerKeyboardShortcuts();
     }
 
     public JPanel getRootPanel(){
@@ -92,59 +102,83 @@ public class CashierDashboard {
         renderQuickItemsPanel();
     }
 
+    private void loadProductsAndServices() {
+        LoadingSpinner loadingSpinner = new LoadingSpinner();
+        loadingSpinner.start("Loading data...");
+
+        cashierDashboardController.getProductsAndServices(new GetProductsAndServicesCallback() {
+            @Override
+            public void onSuccess(CashierDashboardController.GetProductsAndServicesResultSet resultSet) {
+                Console.log(resultSet.getServiceList().size());
+                Console.log(resultSet.getSparePartList().size());
+                sparePartList = resultSet.getSparePartList();
+                serviceList = resultSet.getServiceList();
+
+                loadingSpinner.stop();
+                renderQuickItemsPanel();
+            }
+
+            @Override
+            public void onFailed(Exception ex) {
+                loadingSpinner.stop();
+                ex.printStackTrace();
+            }
+        });
+    }
+
     private void renderQuickItemsPanel() {
+        if(sparePartList == null || serviceList == null) return;
+
         pnlProducts.removeAll();
 
         if(selectedTab == ALL){
-            CashierListItem item1 = new CashierListItem("item 1", AssetsManager.getImageIcon("RepairIcon"), (sparePart -> {
-                cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                renderOrderItemRecords();
-            }));
-            CashierListItem item2 = new CashierListItem("item 2", AssetsManager.getImageIcon("PaintIcon"));
+            // render services
+            for(Service service : serviceList){
+                pnlProducts.add(
+                        new CashierListItem(
+                                service,
+                                AssetsManager.getImageIcon("ServiceIcon"),
+                                this::addServiceRecord
+                        )
+                );
+            }
 
-            pnlProducts.add(item1);
-            pnlProducts.add(item2);
-
-            for(SparePart part : this.cashierDashboardController.getSpareParts()){
-                if(part.isTopSeller()){
-                    pnlProducts.add(new CashierListItem(part, AssetsManager.getImageIcon("GearIcon"), (sparePart) -> {
-                        cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                        renderOrderItemRecords();
-                    }));
-                }
-
-                pnlProducts.add(new CashierListItem(part, AssetsManager.getImageIcon("GearIcon"), (sparePart) -> {
-                    cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                    renderOrderItemRecords();
-                }));
+            // render products
+            for(SparePart part : sparePartList){
+                pnlProducts.add(
+                        new CashierListItem(
+                                part,
+                                AssetsManager.getImageIcon("GearIcon"),
+                                this::addItemRecord
+                        )
+                );
             }
         }
 
         if(selectedTab == PRODUCTS){
-            for(SparePart part : this.cashierDashboardController.getSpareParts()){
-                if(part.isTopSeller()){
-                    pnlProducts.add(new CashierListItem(part, AssetsManager.getImageIcon("GearIcon"), (sparePart) -> {
-                        cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                        renderOrderItemRecords();
-                    }));
-                }
-
-                pnlProducts.add(new CashierListItem(part, AssetsManager.getImageIcon("GearIcon"), (sparePart) -> {
-                    cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                    renderOrderItemRecords();
-                }));
+            // render products
+            for(SparePart part : sparePartList){
+                pnlProducts.add(
+                        new CashierListItem(
+                                part,
+                                AssetsManager.getImageIcon("GearIcon"),
+                                this::addItemRecord
+                        )
+                );
             }
         }
 
         if(selectedTab == SERVICES){
-            CashierListItem item1 = new CashierListItem("item 1", AssetsManager.getImageIcon("RepairIcon"), (sparePart -> {
-                cashierDashboardController.addRecord(new OrderItem((int) (Math.random() * 100), 1, sparePart.getName(), sparePart.getSellingPrice(), 1, sparePart.getSellingPrice() * 1));
-                renderOrderItemRecords();
-            }));
-            CashierListItem item2 = new CashierListItem("item 2", AssetsManager.getImageIcon("PaintIcon"));
-
-            pnlProducts.add(item1);
-            pnlProducts.add(item2);
+            // render services
+            for(Service service : serviceList){
+                pnlProducts.add(
+                        new CashierListItem(
+                                service,
+                                AssetsManager.getImageIcon("ServiceIcon"),
+                                this::addServiceRecord
+                        )
+                );
+            }
         }
 
         pnlProducts.revalidate();
@@ -156,6 +190,48 @@ public class CashierDashboard {
                 syncProductsPanel(e.getComponent().getWidth(), e.getComponent().getHeight());
             }
         });
+    }
+
+    private void addItemRecord(SparePart sparePart) {
+        AddInvoiceRecordInputDialog addInvoiceRecordInputDialog = new AddInvoiceRecordInputDialog(
+                (dialog, qty) -> {
+                    cashierDashboardController.addRecord(
+                            new OrderItem(
+                                    (int) (Math.random() * 100),
+                                    1,
+                                    sparePart.getName(),
+                                    sparePart.getSellingPrice(),
+                                    qty,
+                                    sparePart.getSellingPrice() * qty
+                            )
+                    );
+                    renderOrderItemRecords();
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        addInvoiceRecordInputDialog.showDialog();
+    }
+
+    private void addServiceRecord(Service service) {
+        AddInvoiceRecordInputDialog addInvoiceRecordInputDialog = new AddInvoiceRecordInputDialog(
+                (dialog, qty) -> {
+                    cashierDashboardController.addRecord(
+                            new OrderItem(
+                                    (int) (Math.random() * 100),
+                                    1,
+                                    service.getServiceName(),
+                                    service.getUnitPrice(),
+                                    qty,
+                                    service.getUnitPrice() * qty
+                            )
+                    );
+                    renderOrderItemRecords();
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        addInvoiceRecordInputDialog.showDialog();
     }
 
     private void syncProductsPanel(int width, int height) {
@@ -260,10 +336,93 @@ public class CashierDashboard {
         });
     }
 
-    private <T> void println(T val){
-        if(val instanceof String){
-            System.out.println(val);
-        }
-        System.out.println(val.toString());
+    private void registerKeyboardShortcuts() {
+        pnlRoot.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedPayment();
+            }
+        }, KeyStroke.getKeyStroke("control ENTER"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        pnlRoot.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddCustomer();
+            }
+        }, KeyStroke.getKeyStroke("control shift C"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        pnlRoot.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddDiscount();
+            }
+        }, KeyStroke.getKeyStroke("control shift D"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        pnlRoot.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddVat();
+            }
+        }, KeyStroke.getKeyStroke("control shift V"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        pnlRoot.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddServiceCharge();
+            }
+        }, KeyStroke.getKeyStroke("control shift E"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+    }
+
+    private void proceedPayment() {
+        Console.log("proceed payment triggered");
+    }
+
+    private void proceedAddCustomer() {
+        Console.log("proceed add customer triggered");
+    }
+
+    private void proceedAddDiscount() {
+        AddDiscountInputDialog addDiscountInputDialog = new AddDiscountInputDialog(
+                (dialog, discountRate) -> {
+                    updateDiscount();
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        addDiscountInputDialog.showDialog();
+    }
+
+    private void proceedAddVat() {
+        AddVatRateInputDialog addVatRateInputDialog = new AddVatRateInputDialog(
+                (dialog, vatRate) -> {
+                    updateVatRate();
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        addVatRateInputDialog.showDialog();
+    }
+
+    private void proceedAddServiceCharge() {
+        AddServiceChargeRateInputDialog addServiceChargeRateInputDialog = new AddServiceChargeRateInputDialog(
+                (dialog, serviceChargeRate) -> {
+                    updateServiceCharge();
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        addServiceChargeRateInputDialog.showDialog();
+    }
+
+    private void updateDiscount() {
+
+    }
+
+    private void updateVatRate() {
+
+    }
+
+    private void updateServiceCharge() {
+
     }
 }

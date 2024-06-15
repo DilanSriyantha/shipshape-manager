@@ -6,6 +6,8 @@ public enum NavPath {
     SUPPLIERS,
     INVENTORY,
     EMPLOYEES,
+    SERVICES,
+    CUSTOMERS,
     REPORTS,
     MAIL,
     CASHIER_DASHBOARD,

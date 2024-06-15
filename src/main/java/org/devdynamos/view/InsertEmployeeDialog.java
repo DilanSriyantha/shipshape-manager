@@ -205,8 +205,8 @@ public class InsertEmployeeDialog extends JDialog {
         return validName && validEmail && validPhoneNumber && validJobRole;
     }
 
+    @SuppressWarnings("unchecked")
     private void initSkillsList() {
-        if(lstSkills == null) return;
         this.lstSkills.setModel(this.skillsListModel);
 
         this.btnAddSkill.addActionListener(new ActionListener() {
@@ -252,23 +252,19 @@ public class InsertEmployeeDialog extends JDialog {
     private void deleteSkill() {
         final int selectedIndex = lstSkills.getSelectedIndex();
 
-        if(selectedIndex > -1){
-            if(this.UPDATE_MODE){
-                System.out.println(skillsListModel.get(selectedIndex).getSkillId());
-                employee.removeSkill(skillsListModel.get(selectedIndex).getSkillId());
-            }
+        if(selectedIndex == -1) return;
 
-            skillsListModel.remove(selectedIndex);
+        if(this.UPDATE_MODE){
+            System.out.println(skillsListModel.get(selectedIndex).getSkillId());
+            employee.removeSkill(skillsListModel.get(selectedIndex).getSkillId());
         }
+
+        skillsListModel.remove(selectedIndex);
     }
 
     private void handleDeleteEnable() {
         final int selectedIndex = lstSkills.getSelectedIndex();
-        if(selectedIndex > -1){
-            btnDeleteSkill.setEnabled(true);
-        }else{
-            btnDeleteSkill.setEnabled(false);
-        }
+        btnDeleteSkill.setEnabled(selectedIndex > -1);
     }
 
     public void showDialog() {
