@@ -93,7 +93,8 @@ public class NotificationSender {
         email.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(toEmailAddress));
         email.setSubject(messageSubject);
-        email.setText(bodyText);
+//        email.setText(bodyText);
+        email.setContent(bodyText, "text/html");
 
         // encode and wrap the MIME message into a gmail message
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();

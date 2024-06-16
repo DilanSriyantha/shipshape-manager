@@ -22,7 +22,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="ed6fa" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="ed6fa" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="10" bottom="0" right="10"/>
                 <constraints border-constraint="North"/>
                 <properties/>
@@ -37,39 +37,6 @@
                       <foreground color="-1250068"/>
                       <text value="Add Customer"/>
                       <toolTipText value="CTRL + SHIFT + C"/>
-                    </properties>
-                  </component>
-                  <component id="12795" class="javax.swing.JButton" binding="btnAddDiscount">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <background color="-12881462"/>
-                      <foreground color="-1250068"/>
-                      <text value="Add Discount"/>
-                      <toolTipText value="CTRL + SHIFT + D"/>
-                    </properties>
-                  </component>
-                  <component id="3df1" class="javax.swing.JButton" binding="btnVat">
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <background color="-12881462"/>
-                      <foreground color="-1250068"/>
-                      <text value="Add VAT"/>
-                      <toolTipText value="CTRL + SHIFT + V"/>
-                    </properties>
-                  </component>
-                  <component id="9db04" class="javax.swing.JButton" binding="btnAddServiceCharge">
-                    <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <background color="-12881462"/>
-                      <foreground color="-1250068"/>
-                      <text value="Add Service Charge"/>
-                      <toolTipText value="CTRL + SHIFT + E"/>
                     </properties>
                   </component>
                 </children>
@@ -88,7 +55,9 @@
                 <children>
                   <grid id="771" binding="pnlOrderItemRecords" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <foreground color="-1250068"/>
+                    </properties>
                     <border type="none"/>
                     <children/>
                   </grid>
@@ -102,8 +71,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="54c39" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="54c39" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -111,9 +79,7 @@
                 <border type="none"/>
                 <children>
                   <grid id="f1089" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="West"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -121,15 +87,13 @@
                         <constraints border-constraint="Center"/>
                         <properties>
                           <font size="16"/>
-                          <text value="Disount"/>
+                          <text value="Discount"/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                   <grid id="a683f" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="Center"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -138,15 +102,30 @@
                         <properties>
                           <font size="16"/>
                           <horizontalAlignment value="11"/>
-                          <text value="0.00%"/>
+                          <text value="-0.00%"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="35c80" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints border-constraint="East"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="b12c4" class="javax.swing.JButton" binding="btnAddDiscount">
+                        <constraints border-constraint="Center"/>
+                        <properties>
+                          <background color="-12881462"/>
+                          <foreground color="-1250068"/>
+                          <text value=""/>
+                          <toolTipText value="CTRL + SHIFT + D"/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                 </children>
               </grid>
-              <grid id="e3bb6" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="e3bb6" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -154,9 +133,7 @@
                 <border type="none"/>
                 <children>
                   <grid id="728d1" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="West"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -170,9 +147,7 @@
                     </children>
                   </grid>
                   <grid id="e666c" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="Center"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -181,15 +156,36 @@
                         <properties>
                           <font size="16"/>
                           <horizontalAlignment value="11"/>
-                          <text value="0.00%"/>
+                          <text value="+0.00%"/>
+                        </properties>
+                      </component>
+                      <grid id="3a22f" layout-manager="BorderLayout" hgap="0" vgap="0">
+                        <constraints border-constraint="East"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children/>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="c0a02" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints border-constraint="East"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="3fa14" class="javax.swing.JButton" binding="btnAddVat">
+                        <constraints border-constraint="Center"/>
+                        <properties>
+                          <background color="-12881462"/>
+                          <foreground color="-1250068"/>
+                          <text value=""/>
+                          <toolTipText value="CTRL + SHIFT + V"/>
                         </properties>
                       </component>
                     </children>
                   </grid>
                 </children>
               </grid>
-              <grid id="ba39" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="ba39" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -197,9 +193,7 @@
                 <border type="none"/>
                 <children>
                   <grid id="c602c" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="West"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -213,9 +207,7 @@
                     </children>
                   </grid>
                   <grid id="e6dcc" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
+                    <constraints border-constraint="Center"/>
                     <properties/>
                     <border type="none"/>
                     <children>
@@ -224,7 +216,23 @@
                         <properties>
                           <font size="16"/>
                           <horizontalAlignment value="11"/>
-                          <text value="0.00%"/>
+                          <text value="+0.00%"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="e187e" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints border-constraint="East"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="20aec" class="javax.swing.JButton" binding="btnAddServiceCharge">
+                        <constraints border-constraint="Center"/>
+                        <properties>
+                          <background color="-12881462"/>
+                          <foreground color="-1250068"/>
+                          <text value=""/>
+                          <toolTipText value="CTRL + SHIFT + E"/>
                         </properties>
                       </component>
                     </children>
@@ -311,7 +319,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="9884e" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="9884e" class="javax.swing.JTextField" binding="txtSearch">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -319,7 +327,7 @@
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="b004e" class="javax.swing.JButton" binding="searchButton" default-binding="true">
+                      <component id="b004e" class="javax.swing.JButton" binding="btnSearch">
                         <constraints>
                           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -386,7 +394,9 @@
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <foreground color="-13816531"/>
+                </properties>
               </component>
             </children>
           </grid>
@@ -408,7 +418,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="4f177" class="javax.swing.JLabel">
+                  <component id="4f177" class="javax.swing.JLabel" binding="lblOrderTitle">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

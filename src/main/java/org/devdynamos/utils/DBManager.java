@@ -297,14 +297,18 @@ public class DBManager {
         return -1;
     }
 
+    public static void setAutoCommit(boolean status){
+        try {
+            connection.setAutoCommit(status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void insertBatch(String table, String[] columns, Object[][] values) {
         try{
             if(connection == null){
                 throw new SQLException();
-            }
-
-            if(connection.getAutoCommit()){
-                connection.setAutoCommit(false);
             }
 
             String query = "insert into " + table + "(" + String.join(",", columns) + ")" + " values (" + String.join(",", ArrayUtils.map(columns, (element) -> {
@@ -342,8 +346,10 @@ public class DBManager {
             preparedStatement.executeBatch();
 
             // commit transaction
-            connection.commit();
-            connection.setAutoCommit(true);
+            if(!connection.getAutoCommit()){
+                connection.commit();
+                connection.setAutoCommit(true);
+            }
         }catch (SQLException ex){
             ex.printStackTrace();
 
@@ -387,6 +393,19 @@ public class DBManager {
             ex.printStackTrace();
 
             return -1;
+        }
+    }
+
+    public static void executeCustomQuery(String query){
+        try{
+            if(connection == null){
+                throw new SQLException();
+            }
+
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 

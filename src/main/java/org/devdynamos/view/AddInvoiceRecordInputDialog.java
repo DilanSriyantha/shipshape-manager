@@ -3,6 +3,7 @@ package org.devdynamos.view;
 import org.devdynamos.interfaces.DialogNegativeCallback;
 import org.devdynamos.interfaces.DialogPositiveCallback;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,17 +14,21 @@ public class AddInvoiceRecordInputDialog extends JDialog {
     private JButton btnConfirm;
     private JButton btnCancel;
     private JTextField txtQty;
+    private JLabel lblRemainingQuantity;
 
     private final DialogPositiveCallback<Integer> positiveCallback;
     private final DialogNegativeCallback<Integer> negativeCallback;
+    private final Integer remainingQty;
 
-    public AddInvoiceRecordInputDialog(DialogPositiveCallback<Integer> positiveCallback, DialogNegativeCallback<Integer> negativeCallback) {
+    public AddInvoiceRecordInputDialog(@Nullable Integer remainingQty, DialogPositiveCallback<Integer> positiveCallback, DialogNegativeCallback<Integer> negativeCallback) {
+        this.remainingQty = remainingQty;
         this.positiveCallback = positiveCallback;
         this.negativeCallback = negativeCallback;
 
         setupModalProperties();
         initButtons();
         initInputRestrictions();
+        populateFields();
     }
 
     private void setupModalProperties() {
@@ -106,9 +111,19 @@ public class AddInvoiceRecordInputDialog extends JDialog {
         SwingUtilities.invokeLater(runnable);
     }
 
+    private void populateFields() {
+        if(remainingQty == null) lblRemainingQuantity.setText("Infinite");
+        lblRemainingQuantity.setText(String.valueOf(remainingQty));
+    }
+
     private void onOK() {
         if(txtQty.getText().isEmpty()){
             dispose();
+            return;
+        }
+
+        if(remainingQty != null && Integer.parseInt(txtQty.getText()) > remainingQty){
+            JOptionPane.showMessageDialog(null, "Insufficient stocks to fulfill the requirement.", "Insufficient stocks...", JOptionPane.WARNING_MESSAGE);
             return;
         }
         positiveCallback.execute(this, Integer.parseInt(txtQty.getText()));

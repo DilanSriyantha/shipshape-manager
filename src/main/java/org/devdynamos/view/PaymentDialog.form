@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.PaymentDialog">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="48" y="54" width="601" height="297"/>
+    </constraints>
+    <properties>
+      <preferredSize width="600" height="200"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="94766" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <hspacer id="98af6">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <grid id="9538f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e7465" class="javax.swing.JButton" binding="btnConfirm">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13816531"/>
+                  <font size="16"/>
+                  <foreground color="-1250068"/>
+                  <text value="Confirm"/>
+                </properties>
+              </component>
+              <component id="5723f" class="javax.swing.JButton" binding="btnCancel">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-13816531"/>
+                  <font size="16"/>
+                  <foreground color="-1250068"/>
+                  <text value="Cancel"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="e3588" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="87ede" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="Center"/>
+            <properties>
+              <font size="16"/>
+              <preferredSize width="339" height="128"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="1a97" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="2b3b3" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints border-constraint="Center"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="aa123" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="63c84" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="b704c" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="Total"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="c936d" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="66e29" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="Discount"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="2e784" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="35040" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="VAT"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="7643f" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="16190" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="Service Charge"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="9494c" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="2e13d" class="javax.swing.JLabel" binding="lblTotal">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="0.00"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="21fa2" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="b0e7a" class="javax.swing.JLabel" binding="lblDiscount">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="0.00"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="f314d" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="c8c4" class="javax.swing.JLabel" binding="lblVat">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="0.00"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="38d7f" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="f7048" class="javax.swing.JLabel" binding="lblServiceCharge">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="0.00"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="89f48" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="f1899" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16" style="1"/>
+                                  <horizontalAlignment value="10"/>
+                                  <text value="Section"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="3e33f" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="51c4" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16" style="1"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="Amount"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="e6b73" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="a96ea" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="Grand Total"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="e439a" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="3cfc5" class="javax.swing.JLabel" binding="lblGrandTotal">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                  <text value="0.00"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="52eea" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="ebe68" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints border-constraint="Center"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="8d326" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="98636" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="aee8c" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <text value="Balance"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="7869e" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="b1983" class="javax.swing.JTextField" binding="txtBalance">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <editable value="false"/>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                      <grid id="f8731" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="c081b" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="39b25" class="javax.swing.JLabel">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="0"/>
+                                  <horizontalTextPosition value="0"/>
+                                  <text value="Paid"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="3ecaf" layout-manager="BorderLayout" hgap="0" vgap="0">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="704cf" class="javax.swing.JTextField" binding="txtPaid">
+                                <constraints border-constraint="Center"/>
+                                <properties>
+                                  <font size="16"/>
+                                  <horizontalAlignment value="11"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="52779" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d64fb" class="javax.swing.JSeparator">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <foreground color="-13816531"/>
+                      <orientation value="1"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

@@ -4,18 +4,14 @@ import org.devdynamos.components.CashierListItem;
 import org.devdynamos.components.OrderItemRecord;
 import org.devdynamos.contollers.CashierDashboardController;
 import org.devdynamos.interfaces.GetProductsAndServicesCallback;
-import org.devdynamos.models.OrderItem;
-import org.devdynamos.models.Service;
-import org.devdynamos.models.SparePart;
+import org.devdynamos.interfaces.PlaceOrderCallback;
+import org.devdynamos.models.*;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.Console;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.util.List;
 
 public class CashierDashboard {
@@ -33,14 +29,15 @@ public class CashierDashboard {
     private JButton btnAll;
     private JButton btnProducts;
     private JButton btnServices;
-    private JTextField textField1;
-    private JButton searchButton;
-    private JButton btnAddDiscount;
-    private JButton btnVat;
+    private JTextField txtSearch;
+    private JButton btnSearch;
     private JLabel lblDiscountRate;
     private JLabel lblVatRate;
     private JLabel lblServiceChargeRate;
+    private JButton btnAddDiscount;
+    private JButton btnAddVat;
     private JButton btnAddServiceCharge;
+    private JLabel lblOrderTitle;
 
     private final int ALL = 0;
     private final int PRODUCTS = 1;
@@ -53,6 +50,7 @@ public class CashierDashboard {
     private final CashierDashboardController cashierDashboardController;
     private List<SparePart> sparePartList;
     private List<Service> serviceList;
+    private String searchKey = "";
 
     public CashierDashboard(RootView rootView){
         this.rootView = rootView;
@@ -60,8 +58,7 @@ public class CashierDashboard {
 
         loadProductsAndServices();
         renderOrderItemRecords();
-        initBackButton();
-        initAddCustomerButton();
+        initButtons();
         initTabButtons();
         registerKeyboardShortcuts();
     }
@@ -134,6 +131,7 @@ public class CashierDashboard {
         if(selectedTab == ALL){
             // render services
             for(Service service : serviceList){
+                if(!searchKey.isEmpty()) if(!service.getServiceName().toLowerCase().contains(searchKey.toLowerCase())) continue;
                 pnlProducts.add(
                         new CashierListItem(
                                 service,
@@ -145,6 +143,7 @@ public class CashierDashboard {
 
             // render products
             for(SparePart part : sparePartList){
+                if(!searchKey.isEmpty()) if(!part.getName().toLowerCase().contains(searchKey.toLowerCase())) continue;
                 pnlProducts.add(
                         new CashierListItem(
                                 part,
@@ -158,6 +157,7 @@ public class CashierDashboard {
         if(selectedTab == PRODUCTS){
             // render products
             for(SparePart part : sparePartList){
+                if(!searchKey.isEmpty()) if(!part.getName().toLowerCase().contains(searchKey.toLowerCase())) continue;
                 pnlProducts.add(
                         new CashierListItem(
                                 part,
@@ -171,6 +171,7 @@ public class CashierDashboard {
         if(selectedTab == SERVICES){
             // render services
             for(Service service : serviceList){
+                if(!searchKey.isEmpty()) if(!service.getServiceName().toLowerCase().contains(searchKey.toLowerCase())) continue;
                 pnlProducts.add(
                         new CashierListItem(
                                 service,
@@ -194,17 +195,9 @@ public class CashierDashboard {
 
     private void addItemRecord(SparePart sparePart) {
         AddInvoiceRecordInputDialog addInvoiceRecordInputDialog = new AddInvoiceRecordInputDialog(
+                cashierDashboardController.getRemainingQuantity(sparePart),
                 (dialog, qty) -> {
-                    cashierDashboardController.addRecord(
-                            new OrderItem(
-                                    (int) (Math.random() * 100),
-                                    1,
-                                    sparePart.getName(),
-                                    sparePart.getSellingPrice(),
-                                    qty,
-                                    sparePart.getSellingPrice() * qty
-                            )
-                    );
+                    cashierDashboardController.addRecord(sparePart, qty);
                     renderOrderItemRecords();
                     dialog.dispose();
                 },
@@ -215,17 +208,9 @@ public class CashierDashboard {
 
     private void addServiceRecord(Service service) {
         AddInvoiceRecordInputDialog addInvoiceRecordInputDialog = new AddInvoiceRecordInputDialog(
+                null,
                 (dialog, qty) -> {
-                    cashierDashboardController.addRecord(
-                            new OrderItem(
-                                    (int) (Math.random() * 100),
-                                    1,
-                                    service.getServiceName(),
-                                    service.getUnitPrice(),
-                                    qty,
-                                    service.getUnitPrice() * qty
-                            )
-                    );
+                    cashierDashboardController.addRecord(service, qty);
                     renderOrderItemRecords();
                     dialog.dispose();
                 },
@@ -259,9 +244,7 @@ public class CashierDashboard {
                     (i + 1),
                     item,
                     (orderItem) -> {
-                        this.cashierDashboardController.getOrderItemRecords().removeIf((_orderItem) -> {
-                            return _orderItem.getRecordId() == orderItem.getRecordId();
-                        });
+                        this.cashierDashboardController.removeRecord(orderItem);
                         renderOrderItemRecords();
                     }
             );
@@ -269,7 +252,7 @@ public class CashierDashboard {
             this.pnlOrderItemRecords.add(rec);
         }
 
-        updateTotal(cashierDashboardController.getTotal());
+        updateTotal(cashierDashboardController.getSubTotal());
 
         this.pnlOrderItemRecords.revalidate();
         this.pnlOrderItemRecords.repaint();
@@ -299,18 +282,46 @@ public class CashierDashboard {
         this.btnTotal.setText("LKR " + String.valueOf(total) + "/=");
     }
 
-    private void initBackButton() {
-        this.btnBack.setIcon(AssetsManager.getImageIcon("BackIcon"));
+    private void initButtons() {
+        btnBack.setIcon(AssetsManager.getImageIcon("BackIcon"));
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.goBack();
             }
         });
-    }
 
-    private void initAddCustomerButton() {
-        this.btnAddCustomer.setIcon(AssetsManager.getImageIcon("PersonAddIcon"));
+        btnAddCustomer.setIcon(AssetsManager.getImageIcon("PersonAddIcon"));
+        btnAddCustomer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddCustomer();
+            }
+        });
+
+        btnAddDiscount.setIcon(AssetsManager.getImageIcon("AddIcon"));
+        btnAddDiscount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddDiscount();
+            }
+        });
+
+        btnAddVat.setIcon(AssetsManager.getImageIcon("AddIcon"));
+        btnAddVat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddVat();
+            }
+        });
+
+        btnAddServiceCharge.setIcon(AssetsManager.getImageIcon("AddIcon"));
+        btnAddServiceCharge.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedAddServiceCharge();
+            }
+        });
     }
 
     private void initTabButtons() {
@@ -332,6 +343,24 @@ public class CashierDashboard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectTab(SERVICES);
+            }
+        });
+
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchKey = txtSearch.getText();
+                renderQuickItemsPanel();
+
+                Console.log(searchKey);
+            }
+        });
+
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                    btnSearch.doClick();
             }
         });
     }
@@ -374,17 +403,32 @@ public class CashierDashboard {
     }
 
     private void proceedPayment() {
-        Console.log("proceed payment triggered");
+        PaymentDialog paymentDialog = new PaymentDialog(
+                cashierDashboardController.getCurrentOrder(),
+                (dialog, customerOrder) -> {
+                    handlePlaceOrder(customerOrder);
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        paymentDialog.showDialog();
     }
 
     private void proceedAddCustomer() {
-        Console.log("proceed add customer triggered");
+        SelectCustomerDialog selectCustomerDialog = new SelectCustomerDialog(
+                (dialog, customer) -> {
+                    updateCustomer(customer);
+                    dialog.dispose();
+                },
+                Window::dispose
+        );
+        selectCustomerDialog.showDialog();
     }
 
     private void proceedAddDiscount() {
         AddDiscountInputDialog addDiscountInputDialog = new AddDiscountInputDialog(
                 (dialog, discountRate) -> {
-                    updateDiscount();
+                    updateDiscount(discountRate);
                     dialog.dispose();
                 },
                 Window::dispose
@@ -395,7 +439,7 @@ public class CashierDashboard {
     private void proceedAddVat() {
         AddVatRateInputDialog addVatRateInputDialog = new AddVatRateInputDialog(
                 (dialog, vatRate) -> {
-                    updateVatRate();
+                    updateVatRate(vatRate);
                     dialog.dispose();
                 },
                 Window::dispose
@@ -406,7 +450,7 @@ public class CashierDashboard {
     private void proceedAddServiceCharge() {
         AddServiceChargeRateInputDialog addServiceChargeRateInputDialog = new AddServiceChargeRateInputDialog(
                 (dialog, serviceChargeRate) -> {
-                    updateServiceCharge();
+                    updateServiceCharge(serviceChargeRate);
                     dialog.dispose();
                 },
                 Window::dispose
@@ -414,15 +458,75 @@ public class CashierDashboard {
         addServiceChargeRateInputDialog.showDialog();
     }
 
-    private void updateDiscount() {
-
+    private void updateCustomer(Customer customer){
+        cashierDashboardController.addCustomer(customer);
+        btnAddCustomer.setText(
+                "<html>" + "<table>" +
+                        "<tr>" +
+                        "<td>ID</td>" +
+                        "<td>" + customer.getCustomerId() + "</td></tr>" +
+                        "<tr><td>Name</td>" +
+                        "<td>" + customer.getCustomerName() + "</td>" +
+                        "</tr>" +
+                        "</table>" +
+                        "</html>"
+        );
     }
 
-    private void updateVatRate() {
-
+    private void updateDiscount(double discountRate) {
+        cashierDashboardController.addDiscountRate(discountRate);
+        lblDiscountRate.setText("<html>-" + discountRate + "%</html>");
+        updateTotal(cashierDashboardController.getSubTotal());
     }
 
-    private void updateServiceCharge() {
+    private void updateVatRate(double vatRate) {
+        cashierDashboardController.addVatRate(vatRate);
+        lblVatRate.setText("<html>+" + vatRate + "%</html>");
+        updateTotal(cashierDashboardController.getSubTotal());
+    }
 
+    private void updateServiceCharge(double serviceChargeRate) {
+        cashierDashboardController.addServiceChargeRate(serviceChargeRate);
+        lblServiceChargeRate.setText("<html>+" + serviceChargeRate + "%</html>");
+        updateTotal(cashierDashboardController.getSubTotal());
+    }
+
+    private void handlePlaceOrder(CustomerOrder customerOrder){
+        if(cashierDashboardController.getCustomer() == null){
+            JOptionPane.showMessageDialog(null, "Please select a customer to continue placing order.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        LoadingSpinner loadingSpinner = new LoadingSpinner();
+        loadingSpinner.start("Placing order...");
+
+        cashierDashboardController.placeOrder(
+                customerOrder,
+                new PlaceOrderCallback() {
+                    @Override
+                    public void onSuccess() {
+                        loadingSpinner.stop();
+                        JOptionPane.showMessageDialog(null, "Order placed successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
+                        reset();
+                    }
+
+                    @Override
+                    public void onFailed(Exception ex) {
+                        loadingSpinner.stop();
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+        );
+    }
+
+    private void reset() {
+        cashierDashboardController.reset();
+        updateTotal(0.00);
+        updateDiscount(0.00);
+        updateVatRate(0.00);
+        updateServiceCharge(0.00);
+        btnAddCustomer.setText("Add Customer");
+        pnlOrderItemRecords.removeAll();
     }
 }
