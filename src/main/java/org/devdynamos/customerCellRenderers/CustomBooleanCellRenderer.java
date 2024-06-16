@@ -1,4 +1,4 @@
-package org.devdynamos.utils;
+package org.devdynamos.customerCellRenderers;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

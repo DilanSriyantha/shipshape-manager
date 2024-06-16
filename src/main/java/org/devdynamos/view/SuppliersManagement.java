@@ -1,8 +1,8 @@
 package org.devdynamos.view;
 
 import org.devdynamos.contollers.SuppliersController;
-import org.devdynamos.models.SparePart;
 import org.devdynamos.models.Supplier;
+import org.devdynamos.tableModels.SuppliersTableModel;
 import org.devdynamos.utils.*;
 
 import javax.swing.*;

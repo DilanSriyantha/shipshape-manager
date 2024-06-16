@@ -8,6 +8,7 @@ import org.devdynamos.interfaces.PlaceOrderCallback;
 import org.devdynamos.models.*;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.Console;
+import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +39,7 @@ public class CashierDashboard {
     private JButton btnAddVat;
     private JButton btnAddServiceCharge;
     private JLabel lblOrderTitle;
+    private JButton btnHistory;
 
     private final int ALL = 0;
     private final int PRODUCTS = 1;
@@ -288,6 +290,14 @@ public class CashierDashboard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rootView.goBack();
+            }
+        });
+
+        btnHistory.setIcon(AssetsManager.getImageIcon("HistoryIcon"));
+        btnHistory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rootView.navigate(NavPath.ORDER_HISTORY, new OrderHistory(rootView).getRootPanel());
             }
         });
 

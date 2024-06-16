@@ -1,10 +1,9 @@
-package org.devdynamos.utils;
+package org.devdynamos.tableModels;
 
 import org.devdynamos.models.Order;
+import org.devdynamos.utils.ArrayUtils;
 
 import javax.swing.table.AbstractTableModel;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PendingOrdersTableModel extends AbstractTableModel {

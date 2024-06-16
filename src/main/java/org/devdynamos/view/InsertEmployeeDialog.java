@@ -3,7 +3,7 @@ package org.devdynamos.view;
 import org.devdynamos.models.Employee;
 import org.devdynamos.models.Skill;
 import org.devdynamos.utils.InputValidator;
-import org.devdynamos.utils.SkillsListModel;
+import org.devdynamos.listModels.SkillsListModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

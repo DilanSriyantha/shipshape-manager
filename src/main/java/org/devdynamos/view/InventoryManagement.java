@@ -4,8 +4,8 @@ import org.devdynamos.contollers.InventoryController;
 import org.devdynamos.interfaces.SendOrderPlacementCallback;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.CustomBooleanCellRenderer;
-import org.devdynamos.utils.InventoryTableModel;
+import org.devdynamos.customerCellRenderers.CustomBooleanCellRenderer;
+import org.devdynamos.tableModels.InventoryTableModel;
 import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;

@@ -7,8 +7,8 @@ import org.devdynamos.models.Order;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.Console;
-import org.devdynamos.utils.CustomBooleanCellRenderer;
-import org.devdynamos.utils.PendingOrdersTableModel;
+import org.devdynamos.customerCellRenderers.CustomBooleanCellRenderer;
+import org.devdynamos.tableModels.PendingOrdersTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

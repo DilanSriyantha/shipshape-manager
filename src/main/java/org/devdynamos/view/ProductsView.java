@@ -3,13 +3,11 @@ package org.devdynamos.view;
 import org.devdynamos.contollers.InventoryController;
 import org.devdynamos.contollers.ProductsController;
 import org.devdynamos.interfaces.SendOrderPlacementCallback;
-import org.devdynamos.models.Order;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.models.Supplier;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.CustomBooleanCellRenderer;
-import org.devdynamos.utils.InventoryTableModel;
-import org.devdynamos.utils.NavPath;
+import org.devdynamos.customerCellRenderers.CustomBooleanCellRenderer;
+import org.devdynamos.tableModels.InventoryTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

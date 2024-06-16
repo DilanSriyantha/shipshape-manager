@@ -4,8 +4,7 @@ import org.devdynamos.interfaces.DialogNegativeCallback;
 import org.devdynamos.interfaces.DialogPositiveCallback;
 import org.devdynamos.models.RequiredSkill;
 import org.devdynamos.models.Service;
-import org.devdynamos.utils.RequiredSkillsListModel;
-import org.devdynamos.utils.SkillsListModel;
+import org.devdynamos.listModels.RequiredSkillsListModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

@@ -29,6 +29,7 @@ public class Main {
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/merge.png"), "MergeIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/warning.png"), "WarningIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/service_management.png"), "ServiceIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/history.png"), "HistoryIcon");
 
         RootView rootView = new RootView();
         rootView.show();

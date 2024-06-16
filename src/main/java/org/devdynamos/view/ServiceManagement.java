@@ -9,7 +9,7 @@ import org.devdynamos.models.Service;
 import org.devdynamos.utils.ArrayUtils;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.utils.Console;
-import org.devdynamos.utils.ServicesTableModel;
+import org.devdynamos.tableModels.ServicesTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

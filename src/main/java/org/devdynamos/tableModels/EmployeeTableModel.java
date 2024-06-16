@@ -1,4 +1,4 @@
-package org.devdynamos.utils;
+package org.devdynamos.tableModels;
 
 import org.devdynamos.models.Employee;
 

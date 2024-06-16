@@ -1,6 +1,7 @@
-package org.devdynamos.utils;
+package org.devdynamos.listModels;
 
 import org.devdynamos.models.Skill;
+import org.devdynamos.utils.DBManager;
 
 import javax.swing.*;
 

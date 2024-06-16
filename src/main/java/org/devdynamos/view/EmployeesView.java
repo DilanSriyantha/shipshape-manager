@@ -1,7 +1,9 @@
 package org.devdynamos.view;
 
 import org.devdynamos.contollers.EmployeesController;
+import org.devdynamos.customerCellRenderers.CustomBooleanCellRenderer;
 import org.devdynamos.models.Employee;
+import org.devdynamos.tableModels.EmployeeTableModel;
 import org.devdynamos.utils.*;
 
 import javax.swing.*;

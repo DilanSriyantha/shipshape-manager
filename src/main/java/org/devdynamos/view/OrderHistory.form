@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.devdynamos.view.OrderHistory">
+  <grid id="27dc6" binding="pnlRoot" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="702" height="598"/>
+    </constraints>
+    <properties>
+      <background color="-723724"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="524ea" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="20" bottom="0" right="20"/>
+        <constraints border-constraint="North"/>
+        <properties>
+          <background color="-723724"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="7905e" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-723724"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="35b9" class="javax.swing.JTextField" binding="txtSearch">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-723724"/>
+                  <foreground color="-16777216"/>
+                </properties>
+              </component>
+              <hspacer id="53f2">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <component id="261ce" class="javax.swing.JButton" binding="btnSearch">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-14408668"/>
+                  <borderPainted value="false"/>
+                  <contentAreaFilled value="true"/>
+                  <defaultCapable value="true"/>
+                  <focusPainted value="false"/>
+                  <focusable value="true"/>
+                  <foreground color="-1"/>
+                  <opaque value="true"/>
+                  <requestFocusEnabled value="true"/>
+                  <rolloverEnabled value="true"/>
+                  <text value="Search"/>
+                  <verifyInputWhenFocusTarget value="true"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="bedd3" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="0">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-723724"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="8c20c" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <background color="-723724"/>
+                  <font size="20" style="1"/>
+                  <foreground color="-16777216"/>
+                  <text value="Order History"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="d35a6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="20" bottom="0" right="20"/>
+        <constraints border-constraint="Center"/>
+        <properties>
+          <background color="-723724"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="28c4f" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-723724"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <scrollpane id="35566">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-723724"/>
+                  <foreground color="-13816531"/>
+                  <horizontalScrollBarPolicy value="30"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="93593" class="javax.swing.JTable" binding="tblOrders">
+                    <constraints/>
+                    <properties>
+                      <autoResizeMode value="0"/>
+                      <background color="-723724"/>
+                      <fillsViewportHeight value="true"/>
+                      <foreground color="-14474461"/>
+                      <preferredScrollableViewportSize width="450" height="400"/>
+                      <rowHeight value="28"/>
+                      <rowMargin value="1"/>
+                      <rowSelectionAllowed value="true"/>
+                      <showHorizontalLines value="false"/>
+                      <showVerticalLines value="false"/>
+                      <updateSelectionOnSort value="true"/>
+                      <verifyInputWhenFocusTarget value="true"/>
+                      <visible value="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+              <grid id="b2be8" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <scrollpane id="de3e1">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-723724"/>
+                      <foreground color="-13816531"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="4cfd2" class="javax.swing.JTable" binding="tblProducts">
+                        <constraints/>
+                        <properties>
+                          <background color="-723724"/>
+                          <fillsViewportHeight value="true"/>
+                          <foreground color="-14474461"/>
+                          <preferredScrollableViewportSize width="450" height="400"/>
+                          <rowHeight value="28"/>
+                          <rowMargin value="1"/>
+                          <rowSelectionAllowed value="true"/>
+                          <showHorizontalLines value="false"/>
+                          <showVerticalLines value="false"/>
+                          <updateSelectionOnSort value="true"/>
+                          <verifyInputWhenFocusTarget value="true"/>
+                          <visible value="true"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                  <scrollpane id="6896f">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="d83cd" class="javax.swing.JTable" binding="tblServices">
+                        <constraints/>
+                        <properties>
+                          <background color="-723724"/>
+                          <fillsViewportHeight value="true"/>
+                          <foreground color="-14474461"/>
+                          <preferredScrollableViewportSize width="450" height="400"/>
+                          <rowHeight value="28"/>
+                          <rowMargin value="1"/>
+                          <rowSelectionAllowed value="true"/>
+                          <showHorizontalLines value="false"/>
+                          <showVerticalLines value="false"/>
+                          <updateSelectionOnSort value="true"/>
+                          <verifyInputWhenFocusTarget value="true"/>
+                          <visible value="true"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="12b47" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="20" left="20" bottom="20" right="20"/>
+        <constraints border-constraint="South"/>
+        <properties>
+          <background color="-723724"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e80f0" class="javax.swing.JLabel" binding="lblTotalEmp">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-14474461"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <hspacer id="25142">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <grid id="29ce6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-723724"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="29904" class="javax.swing.JButton" binding="btnBack">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-723724"/>
+                  <borderPainted value="true"/>
+                  <contentAreaFilled value="true"/>
+                  <focusPainted value="false"/>
+                  <foreground color="-13816531"/>
+                  <text value="Back"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

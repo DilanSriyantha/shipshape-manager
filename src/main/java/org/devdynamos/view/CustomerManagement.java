@@ -3,8 +3,7 @@ package org.devdynamos.view;
 import org.devdynamos.contollers.CustomersController;
 import org.devdynamos.models.Customer;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.Console;
-import org.devdynamos.utils.CustomersTableModel;
+import org.devdynamos.tableModels.CustomersTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

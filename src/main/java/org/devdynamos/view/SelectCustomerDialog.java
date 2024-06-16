@@ -5,13 +5,12 @@ import org.devdynamos.interfaces.DialogNegativeCallback;
 import org.devdynamos.interfaces.DialogPositiveCallback;
 import org.devdynamos.models.Customer;
 import org.devdynamos.utils.AssetsManager;
-import org.devdynamos.utils.CustomerSelectTableModel;
+import org.devdynamos.tableModels.CustomerSelectTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
-import java.security.Key;
 import java.util.Arrays;
 import java.util.List;
 
