@@ -23,9 +23,13 @@ ShipShape Manager is a Java-based application with a Swing UI that facilitates t
 
 ## Screenshots
 
-![App Screenshot 1](https://i.ibb.co/hmQ67v5/Screenshot-2.png)
+![Home](https://i.ibb.co/JjMgNfd/Screenshot-9.png)
 
-![App Screenshot 2](https://i.ibb.co/nMw6rW1/Screenshot-3.png)
+![Order](https://i.ibb.co/YkzSY6Y/Screenshot-10.png)
+
+![ConfirmPayment](https://i.ibb.co/6b6kGdB/Screenshot-11.png)
+
+![OrderHistory](https://i.ibb.co/93FbQ9Z/Screenshot-13.png)
 
 ![App Screenshot 3](https://i.ibb.co/5vWjsnh/Screenshot-4.png)
 
