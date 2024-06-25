@@ -263,7 +263,7 @@ public class CashierDashboardController {
 
                 String body = MailGenerator.generateInvoice(customerOrder, customer, orderItemRecords);
                 try{
-                    NotificationSender.sendEmail(customer.getEmail(), customerOrder.getCustomerOrderCaption(), body);
+                    NotificationSender.sendEmail(customer.getEmail(), customerOrder.getCustomerOrderCaption(), body, NotificationSender.HTML);
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }

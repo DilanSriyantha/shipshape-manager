@@ -43,6 +43,9 @@ public class NotificationSender {
     private static final String CREDENTIALS_FILE_PATH = "/client_secret_447264114816-8cgr1cga8b3504qptpu8s3vcou7227l7.apps.googleusercontent.com.json";
     private static Gmail service;
 
+    public static final int TEXT = 0;
+    public static final int HTML = 1;
+
     private static void initialize() throws Exception {
         NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         GsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -78,7 +81,7 @@ public class NotificationSender {
         return credential;
     }
 
-    public static Message sendEmail(String toEmailAddress, String subject, String body) throws Exception {
+    public static Message sendEmail(String toEmailAddress, String subject, String body, int sendType) throws Exception {
         initialize();
 
         // create the email content
@@ -93,8 +96,11 @@ public class NotificationSender {
         email.addRecipient(javax.mail.Message.RecipientType.TO,
                 new InternetAddress(toEmailAddress));
         email.setSubject(messageSubject);
-//        email.setText(bodyText);
-        email.setContent(bodyText, "text/html");
+
+        if(sendType == TEXT)
+            email.setText(bodyText);
+        else
+            email.setContent(bodyText, "text/html");
 
         // encode and wrap the MIME message into a gmail message
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();

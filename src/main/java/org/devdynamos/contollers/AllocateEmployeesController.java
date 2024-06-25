@@ -222,7 +222,7 @@ public class AllocateEmployeesController {
             @Override
             public void run() {
                 try{
-                    NotificationSender.sendEmail(employee.getEmail(), "You are allocated to the job " + job.getServiceName() + " (" + job.getServiceJobId() + ")", MailGenerator.generateAllocationNotification(employee, job));
+                    NotificationSender.sendEmail(employee.getEmail(), "You are allocated to the job " + job.getServiceName() + " (" + job.getServiceJobId() + ")", MailGenerator.generateAllocationNotification(employee, job), NotificationSender.HTML);
                 }catch (Exception ex){
                     callback.onFailed(ex);
                 }

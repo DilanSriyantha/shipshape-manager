@@ -1,5 +1,7 @@
 package org.devdynamos.view;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.devdynamos.interfaces.DBConnectionListener;
 import org.devdynamos.models.Customer;
 import org.devdynamos.models.Supplier;
@@ -13,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class HomeView {
+    private static final Log log = LogFactory.getLog(HomeView.class);
     private JPanel pnlRoot;
     private JLabel lblTitle;
     private JLabel lblDBConStatus;
@@ -24,17 +27,35 @@ public class HomeView {
     private JPanel pnlMail;
     private JPanel pnlServiceManagement;
     private JPanel pnlCustomerManagement;
+    private JLabel lblUserName;
+    private JPanel pnlContainer;
+    private JPanel pnlUser;
     private RootView rootView;
 
     private final Color IDLE_COLOR = new Color(244, 244, 244);
     private final Color HOVER_COLOR = new Color(200, 200, 200, 255);
     private final Color CLICKED_COLOR = new Color(90, 149, 204);
 
+    private JPopupMenu userOptionsMenu;
+
     public HomeView(RootView rootView){
         this.rootView = rootView;
+        rootView.setResizable(true);
+        rootView.setSize(new Dimension(800, 600));
 
+        initUserInfo();
         initButtons();
+        initLogoutPopup();
         checkConnection();
+    }
+
+    private void initUserInfo() {
+        lblUserName.setText(rootView.getCurrentUser().getName());
+
+        if(rootView.getCurrentUser().getType() == 0){
+            pnlContainer.remove(pnlSalesReports);
+            pnlContainer.remove(pnlMail);
+        }
     }
 
     private void initButtons() {
@@ -374,7 +395,7 @@ public class HomeView {
                     }
                 }
 
-//                rootView.navigate(NavPath.MAIL, new Mail(rootView).getRootPanel());
+                rootView.navigate(NavPath.MAIL, new Mail(rootView).getRootPanel());
             }
 
             @Override
@@ -405,6 +426,34 @@ public class HomeView {
                 }
             }
         });
+
+        pnlUser.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(userOptionsMenu == null) return;
+
+                userOptionsMenu.show(pnlUser, e.getX(), e.getY());
+            }
+        });
+    }
+
+    private void initLogoutPopup() {
+        userOptionsMenu = new JPopupMenu("User options");
+
+        JMenuItem logoutItem = new JMenuItem("Logout");
+        logoutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
+
+        userOptionsMenu.add(logoutItem);
+    }
+
+    private void logout() {
+        rootView.setCurrentUser(null);
+        rootView.navigate(NavPath.LOGIN, new Login(rootView).getRootPanel());
     }
 
     private void checkConnection() {
@@ -421,26 +470,6 @@ public class HomeView {
                 lblDBConStatus.setText("Database disconnected");
             }
         });
-
-        tryToReconnectDB();
-    }
-
-    private void tryToReconnectDB() {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    if(DBManager.getConnection() != null) continue;
-                    DBManager.establishConnection("localhost", 4000, "shipshape", "root", "");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        t.start();
     }
 
     public void show() {

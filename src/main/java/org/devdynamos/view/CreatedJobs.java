@@ -91,7 +91,8 @@ public class CreatedJobs {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.goBack();
+                // this will re-construct the view
+                rootView.navigate(NavPath.SERVICES, new ServiceManagement(rootView).getRootPanel());
             }
         });
 
@@ -132,7 +133,7 @@ public class CreatedJobs {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 btnAllocate.setEnabled(getSelectedRowIndex() > -1);
-                btnMakeFinished.setEnabled(!serviceJobsTableModel.getJobAt(getSelectedRowIndex()).isFinished() && getSelectedRowIndex() > -1);
+                btnMakeFinished.setEnabled(getSelectedRowIndex() > -1 && !serviceJobsTableModel.getJobAt(getSelectedRowIndex()).isFinished());
             }
         });
 
@@ -158,7 +159,7 @@ public class CreatedJobs {
         final int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to make this job finished?", "Are you sure?", JOptionPane.YES_NO_OPTION);
         if(res == 0){
             LoadingSpinner loadingSpinner = new LoadingSpinner();
-            loadingSpinner.start("Job finishing process is in progress...");
+            loadingSpinner.start("<html>Job finishing process is in progress...</html>");
 
             createdJobsController.finishJob(job, new InsertRequestCallback() {
                 @Override

@@ -144,15 +144,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="5f8ab" class="javax.swing.JButton" binding="btnAllocate">
-                <constraints/>
-                <properties>
-                  <background color="-14408668"/>
-                  <focusPainted value="false"/>
-                  <foreground color="-1250068"/>
-                  <text value="Allocate"/>
-                </properties>
-              </component>
               <component id="c00eb" class="javax.swing.JButton" binding="btnInsert">
                 <constraints/>
                 <properties>

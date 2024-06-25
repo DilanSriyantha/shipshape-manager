@@ -53,12 +53,4 @@ public class EmployeeTableModel extends AbstractTableModel {
     public Employee getEmployeeAt(int rowIndex){
         return this.employees.get(rowIndex);
     }
-
-    public void setAllocated(int rowIndex, boolean status){
-        Employee updatedEmployee = this.employees.get(rowIndex);
-        updatedEmployee.setAllocationStatus(status);
-
-        employees.set(rowIndex, updatedEmployee);
-        fireTableRowsUpdated(rowIndex, rowIndex);
-    }
 }

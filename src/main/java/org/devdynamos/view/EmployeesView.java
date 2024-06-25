@@ -27,7 +27,6 @@ public class EmployeesView {
     private JPanel pnlAllocate;
     private JTable tblEmp;
     private JButton btnBack;
-    private JButton btnAllocate;
     private JButton btnDelete;
     private JButton btnUpdate;
     private JButton btnInsert;
@@ -97,30 +96,14 @@ public class EmployeesView {
     }
 
     private void initButtons() {
-        btnAllocate.setIcon(AssetsManager.getImageIcon("PersonAddIcon"));
-        btnAllocate.setEnabled(false);
-
         tblEmp.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int rowIndex = tblEmp.getSelectedRow();
                 if(rowIndex > -1){
-                    behaveAllocateBtn(rowIndex);
                     behaveUpdateBtn(rowIndex);
                     behaveDeleteBtn(rowIndex);
                 }
-            }
-        });
-
-        btnAllocate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                final int selectedRowIndex = tblEmp.getSelectedRow();
-
-                employeeTableModel.setAllocated(
-                        selectedRowIndex,
-                        !employeeTableModel.getEmployeeAt(selectedRowIndex).isAllocated()
-                );
             }
         });
 
@@ -285,16 +268,6 @@ public class EmployeesView {
         int modelSelectedIndex = tblEmp.convertRowIndexToModel(viewSelectedIndex);
 
         return modelSelectedIndex;
-    }
-
-    private void behaveAllocateBtn(int row) {
-        if (!tblEmp.getValueAt(row, 4).equals("Allocated")) {
-            btnAllocate.setText("Allocate");
-            btnAllocate.setEnabled(true);
-        } else {
-            btnAllocate.setText("Allocated");
-            btnAllocate.setEnabled(false);
-        }
     }
 
     private void behaveUpdateBtn(int row){
