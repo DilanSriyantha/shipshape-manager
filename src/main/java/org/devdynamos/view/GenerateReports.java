@@ -168,7 +168,7 @@ public class GenerateReports {
 
     private void savePDF() {
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Report document creation in progress...");
+        loadingSpinner.start("<html>Report document creation in progress...</html>");
 
         reportsController.createReportPDF(startDateString, endDateString, reportRecordList, total, new InsertRequestCallback() {
             @Override

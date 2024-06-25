@@ -14,5 +14,7 @@ public enum NavPath {
     SUPPLIER_PRODUCTS,
     PENDING_ORDERS,
     ORDER_HISTORY,
-    CREATED_JOBS
+    CREATED_JOBS,
+    LOGIN,
+    REGISTER
 }

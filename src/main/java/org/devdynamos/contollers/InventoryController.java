@@ -48,7 +48,8 @@ public class InventoryController {
                                     "Yours sincerely,\n\n" +
                                     "ShipShape\n" +
                                     "+94 70 13 63 615\n" +
-                                    "info.shipshapemanager@gmail.com"
+                                    "info.shipshapemanager@gmail.com",
+                            NotificationSender.TEXT
                     );
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ReportsController {
-    private final String REPORT_FILE_DIR = System.getProperty("user.dir");
+    private final String REPORT_FILE_DIR = System.getProperty("user.dir") + "/Reports/";
     private final String REPORT_FILE_NAME = "ShipShape_Manager_Report_" + (int)(Math.random() * 10000) + ".pdf";
     private final String REPORT_FILE_PATH = REPORT_FILE_DIR + "/" + REPORT_FILE_NAME;
 

@@ -2,11 +2,11 @@ package org.devdynamos.contollers;
 
 import org.devdynamos.interfaces.GetJobsListCallback;
 import org.devdynamos.interfaces.InsertRequestCallback;
-import org.devdynamos.models.Employee;
-import org.devdynamos.models.GetRequestResultSet;
-import org.devdynamos.models.RequiredSkill;
-import org.devdynamos.models.ServiceJob;
+import org.devdynamos.models.*;
+import org.devdynamos.utils.Console;
 import org.devdynamos.utils.DBManager;
+import org.devdynamos.utils.MailGenerator;
+import org.devdynamos.utils.NotificationSender;
 
 import java.util.HashMap;
 import java.util.List;
@@ -99,11 +99,28 @@ public class CreatedJobsController {
                     DBManager.update("employees", employee.toHashMap(), "empId=" + employee.getEmpId());
                     DBManager.delete("allocatedEmployees", "serviceJobId=" + job.getServiceJobId() + " and employeeId=" + employee.getEmpId());
 
+                    Console.log(employee.toString());
+
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         callback.onFailed(ex);
                     }
+                }
+            }
+        });
+
+        Thread sendJobCompletionNotification = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    List<Customer> customers = DBManager.executeQuery(Customer.class, "select c.customerId, c.customerName, c.contactNumber, c.email, c.registeredDate from (select * from servicejobs where serviceJobId = " + job.getServiceJobId() + ") as sj\n" +
+                            "join customerorders as co on sj.customerOrderId = co.customerOrderId\n" +
+                            "join customers as c on co.customerId = c.customerId;");
+                    if(!customers.isEmpty())
+                        NotificationSender.sendEmail(customers.getFirst().getEmail(), "Ordered service is completed.", MailGenerator.generateJobCompletionNotification(customers.getFirst(), job), NotificationSender.HTML);
+                }catch(Exception ex){
+                    Console.log(ex.getMessage());
                 }
             }
         });
@@ -114,6 +131,7 @@ public class CreatedJobsController {
                 try{
                     updateServiceJob.join();
                     updateAllocatedEmployeesAndDeleteAllocationRecords.join();
+                    sendJobCompletionNotification.join();
 
                     callback.onSuccess();
                 }catch (Exception ex){
@@ -124,6 +142,7 @@ public class CreatedJobsController {
 
         updateServiceJob.start();
         updateAllocatedEmployeesAndDeleteAllocationRecords.start();
+        sendJobCompletionNotification.start();
         waitingThread.start();
     }
 }

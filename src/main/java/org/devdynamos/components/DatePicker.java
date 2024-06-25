@@ -331,7 +331,7 @@ public class DatePicker extends JPanel {
         return formatter.format(date);
     }
 
-    private String toDateString(String date, @Nullable String format){
+    private String toDateString(String date, @org.jetbrains.annotations.Nullable String format){
         SimpleDateFormat dateFormatter = new SimpleDateFormat(
                 format == null ? INITIAL_DATE_FORMAT : format
         );

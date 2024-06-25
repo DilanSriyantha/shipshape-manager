@@ -11,6 +11,7 @@ import org.devdynamos.models.ServiceJob;
 import org.devdynamos.tableModels.AllocatedEmployeesTableModel;
 import org.devdynamos.tableModels.EmployeeTableModel;
 import org.devdynamos.utils.AssetsManager;
+import org.devdynamos.utils.NavPath;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -192,7 +193,8 @@ public class AllocateEmployees {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.goBack();
+                // this will re-construct the view
+                rootView.navigate(NavPath.CREATED_JOBS, new CreatedJobs(rootView).getRootPanel());
             }
         });
 
@@ -286,7 +288,7 @@ public class AllocateEmployees {
         employee.setAllocationStatus(true);
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Allocation process in progress");
+        loadingSpinner.start("<html>Allocation process in progress</html>");
 
         allocateEmployeesController.allocateEmployee(job, employee, new InsertRequestCallback() {
             @Override
@@ -308,7 +310,7 @@ public class AllocateEmployees {
         final Employee employee = allocatedEmployeesTableModel.getEmployeeAt(getSelectedRowIndex(ALLOCATED_TABLE));
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("De-Allocation process in progress");
+        loadingSpinner.start("<html>De-Allocation process in progress</html>");
 
         allocateEmployeesController.deallocateEmployee(job, employee, new InsertRequestCallback() {
             @Override

@@ -37,6 +37,8 @@ public class DBManager {
     }
 
     public static void addConnectionListener(DBConnectionListener connectionListener) {
+        if(connection != null) connectionListener.onConnect();
+        if(connection == null) connectionListener.onDisconnect();
         connectionListeners.add(connectionListener);
     }
 
@@ -229,7 +231,7 @@ public class DBManager {
 
             return id;
         }catch (Exception ex){
-            Console.log(ex.getMessage());
+            ex.printStackTrace();
 
             return -1;
         }

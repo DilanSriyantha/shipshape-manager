@@ -197,6 +197,7 @@ public class Employee {
             put("contactNumber", contactNumber);
             put("jobRole", jobRole);
             put("workArea", workArea);
+            put("allocationStatus", allocationStatus);
         }};
     }
 

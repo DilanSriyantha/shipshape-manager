@@ -102,7 +102,7 @@ public class ServiceManagement {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.goBack();
+                rootView.navigate(NavPath.HOME, new HomeView(rootView).getRootPanel());
             }
         });
 

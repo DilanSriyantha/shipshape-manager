@@ -33,6 +33,7 @@ public class Main {
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/check.png"), "CheckIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/generate.png"), "GenerateIcon");
         AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/floppy.png"), "SaveIcon");
+        AssetsManager.loadImageIcon(Main.class.getClassLoader().getResource("images/send.png"), "SendIcon");
 
         RootView rootView = new RootView();
         rootView.show();
