@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
 import java.util.List;
@@ -83,9 +84,7 @@ public class SuppliersManagement {
                             updateView();
                             dialog.dispose();
                         },
-                        (dialog) -> {
-                            dialog.dispose();
-                        }
+                        Window::dispose
                 );
                 insertSupplierDialog.showDialog();
             }
@@ -103,9 +102,7 @@ public class SuppliersManagement {
                             updateView();
                             dialog.dispose();
                         },
-                        (dialog) -> {
-                            dialog.dispose();
-                        }
+                        Window::dispose
                 );
                 updateSupplierDialog.showDialog();
             }

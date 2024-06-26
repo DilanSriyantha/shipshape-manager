@@ -111,7 +111,7 @@
                       <component id="1058d" class="javax.swing.JLabel">
                         <constraints border-constraint="Center"/>
                         <properties>
-                          <text value="Expected datePlaced"/>
+                          <text value="Expected Date"/>
                         </properties>
                       </component>
                     </children>

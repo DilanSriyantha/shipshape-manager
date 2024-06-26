@@ -48,7 +48,7 @@ public class CashierDashboard {
     private final Color IDLE_COLOR = new Color(184, 207, 229);
     private int selectedTab = ALL;
     private Dimension orderItemRecordsListSize;
-    private RootView rootView;
+    private final RootView rootView;
     private final CashierDashboardController cashierDashboardController;
     private List<SparePart> sparePartList;
     private List<Service> serviceList;
@@ -190,7 +190,7 @@ public class CashierDashboard {
         pnlProducts.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                syncProductsPanel(e.getComponent().getWidth(), e.getComponent().getHeight());
+                syncProductsPanel(e.getComponent().getWidth());
             }
         });
     }
@@ -221,7 +221,7 @@ public class CashierDashboard {
         addInvoiceRecordInputDialog.showDialog();
     }
 
-    private void syncProductsPanel(int width, int height) {
+    private void syncProductsPanel(int width) {
         int numberOfComponentsCanBeMappedInARow = width / CashierListItem.defaultWidth;
         if(numberOfComponentsCanBeMappedInARow <= 0)
             numberOfComponentsCanBeMappedInARow = 1;
@@ -232,7 +232,7 @@ public class CashierDashboard {
         Console.log("number of components can be mapped in row : " + numberOfComponentsCanBeMappedInARow);
         Console.log("number of components in a column : " + numberOfComponentsInAColumn);
         Console.log("total height : " + totalHeight);
-        Console.log("pnlProducts height : " + pnlProducts.getWidth());
+        Console.log("pnlProducts width : " + pnlProducts.getWidth());
 
         pnlProducts.setPreferredSize(new Dimension(width - 20, totalHeight));
     }
@@ -330,6 +330,13 @@ public class CashierDashboard {
             @Override
             public void actionPerformed(ActionEvent e) {
                 proceedAddServiceCharge();
+            }
+        });
+
+        btnTotal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                proceedPayment();
             }
         });
     }

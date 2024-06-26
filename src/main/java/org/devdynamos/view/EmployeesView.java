@@ -193,6 +193,10 @@ public class EmployeesView {
     }
 
     private void deleteEmployee(int id) {
+        int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this employee?", "Are you sure?", JOptionPane.YES_NO_OPTION);
+        if(res == 1)
+            return;
+
         LoadingSpinner loadingSpinner = new LoadingSpinner();
         loadingSpinner.start("Deletion in progress");
 
