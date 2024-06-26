@@ -1,6 +1,7 @@
 package org.devdynamos.utils;
 
 import org.devdynamos.interfaces.DBConnectionListener;
+import org.devdynamos.models.Customer;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.State;

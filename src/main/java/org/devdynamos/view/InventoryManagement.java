@@ -97,23 +97,6 @@ public class InventoryManagement {
             }
         });
 
-        btnPlaceOrderFromSupplier.setIcon(AssetsManager.getImageIcon("AddIcon"));
-        btnPlaceOrderFromSupplier.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PlaceOrderInputDialog placeOrderInputDialog = new PlaceOrderInputDialog(
-                        (dialog, res) -> {
-                            executePlaceOrder(res.getQty(), res.getExpectedDeliveryDate());
-                            dialog.dispose();
-                        },
-                        (dialog) -> {
-                            dialog.dispose();
-                        }
-                );
-                placeOrderInputDialog.showDialog();
-            }
-        });
-
         btnUpdate.setIcon(AssetsManager.getImageIcon("UpdateIcon"));
         btnUpdate.addActionListener(new ActionListener() {
             @Override
@@ -158,7 +141,6 @@ public class InventoryManagement {
             public void valueChanged(ListSelectionEvent e) {
                 int selectedIndex = tblInventory.getSelectedRow();
 
-                behaveOrderButton(selectedIndex);
                 behaveUpdateButton(selectedIndex);
                 behaveDeleteButton(selectedIndex);
             }
@@ -266,10 +248,6 @@ public class InventoryManagement {
                     }
                 }
         );
-    }
-
-    private void behaveOrderButton(int selectedIndex){
-        btnPlaceOrderFromSupplier.setEnabled(selectedIndex >= 0);
     }
 
     private void behaveUpdateButton(int selectedIndex){

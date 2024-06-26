@@ -140,6 +140,12 @@ public class PaymentDialog extends JDialog {
             onCancel();
             return;
         }
+
+        if(Double.parseDouble(txtPaid.getText()) < customerOrder.getGrandTotal()){
+            JOptionPane.showMessageDialog(null, "Payment should be settled to proceed.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         customerOrder.setPaidAmount(Double.parseDouble(txtPaid.getText()));
         customerOrder.setBalanceAmount(Double.parseDouble(txtBalance.getText()));
 

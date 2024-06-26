@@ -236,15 +236,6 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="a4fe2" class="javax.swing.JButton" binding="btnPlaceOrderFromSupplier">
-                <constraints/>
-                <properties>
-                  <background color="-13816531"/>
-                  <enabled value="false"/>
-                  <foreground color="-1250068"/>
-                  <text value="Order"/>
-                </properties>
-              </component>
               <component id="d9a95" class="javax.swing.JButton" binding="btnUpdate">
                 <constraints/>
                 <properties>
