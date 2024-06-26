@@ -1,7 +1,9 @@
 package org.devdynamos.view;
 
 import org.devdynamos.contollers.InventoryController;
+import org.devdynamos.interfaces.GetRequestCallback;
 import org.devdynamos.interfaces.SendOrderPlacementCallback;
+import org.devdynamos.models.GetRequestResultSet;
 import org.devdynamos.models.SparePart;
 import org.devdynamos.utils.AssetsManager;
 import org.devdynamos.customerCellRenderers.CustomBooleanCellRenderer;
@@ -13,6 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class InventoryManagement {
 
     private List<SparePart> sparePartList;
 
+    private JPopupMenu popupMenu;
+
     public InventoryManagement(RootView rootView){
         this.rootView = rootView;
         this.inventoryController = new InventoryController();
@@ -48,6 +53,7 @@ public class InventoryManagement {
         loadSpareParts();
         renderTable();
         initButtons();
+        initPopupMenu();
     }
 
     public JPanel getRootPanel() {
@@ -157,6 +163,48 @@ public class InventoryManagement {
                 behaveDeleteButton(selectedIndex);
             }
         });
+
+        tblInventory.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getButton() == MouseEvent.BUTTON3)
+                    if(getSelectedRowIndex() > -1)
+                        popupMenu.show(tblInventory, e.getX(), e.getY());
+            }
+        });
+    }
+
+    private void initPopupMenu() {
+        popupMenu = new JPopupMenu("Item options");
+
+        JMenuItem menuItem = new JMenuItem("Predict stock out date");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(getSelectedRowIndex() > -1)
+                    inventoryTableModel.getSparePartAt(getSelectedRowIndex()).predictOutOfStockDate(new GetRequestCallback<LocalDate>() {
+                        @Override
+                        public void onSuccess(GetRequestResultSet<LocalDate> resultSet) {
+                            JOptionPane.showMessageDialog(null,  inventoryTableModel.getSparePartAt(getSelectedRowIndex()).getName() + " Stock may be out by " + resultSet.getResultList().getFirst().toString(), "Info", JOptionPane.INFORMATION_MESSAGE);
+                        }
+
+                        @Override
+                        public void onFailed(Exception ex) {
+                            JOptionPane.showMessageDialog(null, "No sales records found on the subjected product yet.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    });
+            }
+        });
+
+        popupMenu.add(menuItem);
+    }
+
+    private int getSelectedRowIndex() {
+        int viewSelectedIndex = tblInventory.getSelectedRow();
+        if(viewSelectedIndex == -1) return -1;
+
+        int modelSelectedIndex = tblInventory.convertRowIndexToModel(viewSelectedIndex);
+        return modelSelectedIndex;
     }
 
     private void handleGotoPending() {
