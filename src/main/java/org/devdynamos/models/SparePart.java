@@ -1,7 +1,16 @@
 package org.devdynamos.models;
 
+import org.devdynamos.interfaces.GetRequestCallback;
+import org.devdynamos.utils.DBManager;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SparePart {
     private int partId;
@@ -180,5 +189,62 @@ public class SparePart {
                 currentQuantity,
                 initialQuantity
         };
+    }
+
+    public void predictOutOfStockDate(GetRequestCallback<LocalDate> callback) {
+        GetRequestResultSet<LocalDate> resultSet = new GetRequestResultSet<>();
+        AtomicReference<Throwable> predictionThreadException = new AtomicReference<>(null);
+        Thread predict = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double avgSalesRate = 0.0d;
+                List<ReportRecord> salesRecords = new ArrayList<>();
+                try {
+                    salesRecords = DBManager.executeQuery(ReportRecord.class, "select * from (select (row_number() over (order by cop.customerOrderId)) as id, sp.partName as caption, cop.quantity, (cop.quantity * sp.sellingPrice) as total, co.datePlaced from customerorderproducts as cop join (select * from spareparts where partId=" + partId + ") as sp on cop.sparePartId = sp.partId join customerorders as co on cop.customerOrderId = co.customerOrderId) as recs;");
+
+                    if (salesRecords.isEmpty())
+                        avgSalesRate = 0.0d;
+                    else {
+                        int totalSold = salesRecords.stream().mapToInt(ReportRecord::getQuantity).sum();
+                        LocalDateTime firstDate = salesRecords.getFirst().getDatePlaced();
+                        LocalDateTime lastDate = salesRecords.getLast().getDatePlaced();
+                        long daysBetween = ChronoUnit.DAYS.between(firstDate, lastDate);
+                        if (daysBetween == 0)
+                            avgSalesRate = totalSold;
+                        else
+                            avgSalesRate = (double) totalSold / daysBetween;
+                    }
+
+                    long daysToStockOut = (long) (currentQuantity / avgSalesRate);
+                    LocalDate localDate = LocalDate.now().plusDays(daysToStockOut);
+
+                    List<LocalDate> results = new ArrayList<>();
+                    results.add(localDate);
+
+                    resultSet.setResultList(results);
+                }catch (Exception ex){
+                    predictionThreadException.set(ex);
+                }
+            }
+        });
+
+        Thread waitingThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    predict.join();
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+
+                if(predictionThreadException.get() == null)
+                    callback.onSuccess(resultSet);
+                else
+                    callback.onFailed((Exception) predictionThreadException.get());
+            }
+        });
+
+        predict.start();
+        waitingThread.start();
     }
 }
