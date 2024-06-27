@@ -198,7 +198,7 @@ public class EmployeesView {
             return;
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Deletion in progress");
+        loadingSpinner.start("Please wait");
 
         employeesController.deleteEmployee(
                 id,
@@ -221,7 +221,7 @@ public class EmployeesView {
 
     private void insertEmployee(Employee employee){
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Insertion in progress...");
+        loadingSpinner.start("Please wait...");
 
         employeesController.insertEmployee(
                 employee,
@@ -244,7 +244,7 @@ public class EmployeesView {
 
     private void updateEmployee(Employee employee){
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Insertion in progress...");
+        loadingSpinner.start("Please wait...");
 
         employeesController.updateEmployee(
                 employee,

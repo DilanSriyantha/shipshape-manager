@@ -53,12 +53,14 @@ public class AllocateEmployees {
     private final RequiredSkillsListModel requiredSkillsListModel = new RequiredSkillsListModel();
     private List<Employee> employeesList;
     private List<Employee> allocatedEmployeesList;
+    private final CreatedJobs createdJobsView;
 
     private boolean SUGGESTION_MADE = false;
 
-    public AllocateEmployees(RootView rootView, ServiceJob job){
+    public AllocateEmployees(RootView rootView, ServiceJob job, CreatedJobs createdJobsView){
         this.rootView = rootView;
         this.job = job;
+        this.createdJobsView = createdJobsView;
 
         populateJobInfo();
         loadInitialData();
@@ -193,8 +195,7 @@ public class AllocateEmployees {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // this will re-construct the view
-                rootView.navigate(NavPath.CREATED_JOBS, new CreatedJobs(rootView).getRootPanel());
+                rootView.goBack();
             }
         });
 
@@ -288,13 +289,14 @@ public class AllocateEmployees {
         employee.setAllocationStatus(true);
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("<html>Allocation process in progress</html>");
+        loadingSpinner.start("<html>Please wait...</html>");
 
         allocateEmployeesController.allocateEmployee(job, employee, new InsertRequestCallback() {
             @Override
             public void onSuccess() {
                 loadingSpinner.stop();
                 loadInitialData();
+                createdJobsView.loadJobs();
                 JOptionPane.showMessageDialog(null, "Employee allocated successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -310,13 +312,14 @@ public class AllocateEmployees {
         final Employee employee = allocatedEmployeesTableModel.getEmployeeAt(getSelectedRowIndex(ALLOCATED_TABLE));
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("<html>De-Allocation process in progress</html>");
+        loadingSpinner.start("<html>Please wait...</html>");
 
         allocateEmployeesController.deallocateEmployee(job, employee, new InsertRequestCallback() {
             @Override
             public void onSuccess() {
                 loadingSpinner.stop();
                 loadInitialData();
+                createdJobsView.loadJobs();
                 JOptionPane.showMessageDialog(null, "Employee de-allocated successfully.", "Successful", JOptionPane.INFORMATION_MESSAGE);
             }
 

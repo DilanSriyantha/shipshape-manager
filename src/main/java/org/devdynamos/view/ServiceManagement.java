@@ -58,7 +58,7 @@ public class ServiceManagement {
         return pnlRoot;
     }
 
-    private void loadServices() {
+    public void loadServices() {
         LoadingSpinner loadingSpinner = new LoadingSpinner();
         loadingSpinner.start("Loading...");
 
@@ -102,7 +102,7 @@ public class ServiceManagement {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.navigate(NavPath.HOME, new HomeView(rootView).getRootPanel());
+                rootView.goBack();
             }
         });
 
@@ -110,7 +110,7 @@ public class ServiceManagement {
         btnCreatedJobs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rootView.navigate(NavPath.CREATED_JOBS, new CreatedJobs(rootView).getRootPanel());
+                navigateToCreatedJobs();
             }
         });
 
@@ -164,6 +164,10 @@ public class ServiceManagement {
         });
     }
 
+    private void navigateToCreatedJobs() {
+        rootView.navigate(NavPath.CREATED_JOBS, new CreatedJobs(rootView).getRootPanel());
+    }
+
     private void handleInsertService() {
         Service service = new Service(getMaxServiceId() + 1);
         InsertServiceDialog insertServiceDialog = new InsertServiceDialog(
@@ -179,7 +183,7 @@ public class ServiceManagement {
 
     private void insertService(Service service){
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Insertion in progress...");
+        loadingSpinner.start("Please wait...");
 
         serviceController.insertService(
                 service,
@@ -218,7 +222,7 @@ public class ServiceManagement {
 
     private void updateService(Service service){
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Update in progress");
+        loadingSpinner.start("Please wait...");
 
         serviceController.updateService(service, new UpdateServiceCallback() {
             @Override
@@ -245,7 +249,7 @@ public class ServiceManagement {
         if(confirm != 0) return;
 
         LoadingSpinner loadingSpinner = new LoadingSpinner();
-        loadingSpinner.start("Deletion in progress");
+        loadingSpinner.start("Please wait...");
 
         serviceController.deleteService(servicesTableModel.getServiceAt(selectedRowIndex), new DeleteServiceCallback() {
             @Override
