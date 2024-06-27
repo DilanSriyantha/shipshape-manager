@@ -56,6 +56,15 @@ public class RootView {
         frame.revalidate();
     }
 
+    public void setExtendedState(int state){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.setExtendedState(state);
+            }
+        });
+    }
+
     public void navigate(NavPath to){
         this.cl.show(this.pnlRoot, String.valueOf(to));
     }

@@ -50,7 +50,7 @@ public class CreatedJobs {
         return pnlRoot;
     }
 
-    private void loadJobs() {
+    public void loadJobs() {
         LoadingSpinner loadingSpinner = new LoadingSpinner();
         loadingSpinner.start("Loading...");
 
@@ -92,7 +92,8 @@ public class CreatedJobs {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // this will re-construct the view
-                rootView.navigate(NavPath.SERVICES, new ServiceManagement(rootView).getRootPanel());
+//                rootView.navigate(NavPath.SERVICES, new ServiceManagement(rootView).getRootPanel());
+                rootView.goBack();
             }
         });
 
@@ -115,8 +116,7 @@ public class CreatedJobs {
         btnAllocate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final ServiceJob selectedJob = serviceJobsTableModel.getJobAt(getSelectedRowIndex());
-                rootView.navigate(NavPath.CREATED_JOBS, new AllocateEmployees(rootView, selectedJob).getRootPanel());
+                navigateToAllocateEmployees();
             }
         });
 
@@ -146,6 +146,11 @@ public class CreatedJobs {
         });
     }
 
+    private void navigateToAllocateEmployees() {
+        final ServiceJob selectedJob = serviceJobsTableModel.getJobAt(getSelectedRowIndex());
+        rootView.navigate(NavPath.CREATED_JOBS, new AllocateEmployees(rootView, selectedJob, this).getRootPanel());
+    }
+
     private int getSelectedRowIndex() {
         if(tblJobs.getSelectedRow() == -1) return -1;
 
@@ -159,7 +164,7 @@ public class CreatedJobs {
         final int res = JOptionPane.showConfirmDialog(null, "Are you sure you want to make this job finished?", "Are you sure?", JOptionPane.YES_NO_OPTION);
         if(res == 0){
             LoadingSpinner loadingSpinner = new LoadingSpinner();
-            loadingSpinner.start("<html>Job finishing process is in progress...</html>");
+            loadingSpinner.start("<html>Please wait...</html>");
 
             createdJobsController.finishJob(job, new InsertRequestCallback() {
                 @Override

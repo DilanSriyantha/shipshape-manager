@@ -41,7 +41,8 @@ public class HomeView {
     public HomeView(RootView rootView){
         this.rootView = rootView;
         rootView.setResizable(true);
-        rootView.setSize(new Dimension(800, 600));
+//        rootView.setSize(new Dimension(800, 600));
+        rootView.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         initUserInfo();
         initButtons();
